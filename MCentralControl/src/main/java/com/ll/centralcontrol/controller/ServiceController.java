@@ -1,6 +1,7 @@
 package com.ll.centralcontrol.controller;
 
 import com.ll.centralcontrol.client.ServiceAnalysisClient;
+import com.ll.centralcontrol.utils.MDatabaseUtils;
 import com.ll.common.bean.MServiceRegisterBean;
 import com.ll.common.bean.MSystemInfo;
 import com.ll.common.service.MService;
@@ -23,19 +24,24 @@ import java.util.*;
 @RequestMapping("/centerController")
 public class ServiceController {
 
+    private static Set<String> allServiceId  = new HashSet<String>();
 
-    private static Set<String> allServiceId  = new HashSet<>();
+    @Autowired
+    private ServiceAnalysisClient serviceAnalysisClient;
 
+
+    @Autowired
+    private MDatabaseUtils mDatabaseUtils;
 
     @PostMapping(value = "/registerOnservice")
     public MResponse registerService(@RequestBody MServiceRegisterBean registerBean) {
-        return ServiceAnalysisClient.getServiceInfo(registerBean);
+        return serviceAnalysisClient.getServiceInfo(registerBean);
     }
 
 
     @PostMapping(value = "/register")
     public MResponse registerService(@RequestBody MSystemInfo mSystemInfo) {
-        return ServiceAnalysisClient.getSystemInfo(mSystemInfo);
+        return serviceAnalysisClient.getSystemInfo(mSystemInfo);
     }
 
 
@@ -64,15 +70,11 @@ public class ServiceController {
                 serviceInterface.setId(MIDUtils.uniqueInterfaceId(service.getServiceName(), serviceInterface.getFunctionName()));
                 serviceInterface.setServiceId(service.getId());
             }
-            service.setImageUrl("");
+
+            mDatabaseUtils.insertService(service);
         }
         // 存储数据库
-
-
-
-
-
-
+        return MResponse.successResponse();
 
     }
 

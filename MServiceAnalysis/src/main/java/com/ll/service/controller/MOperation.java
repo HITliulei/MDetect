@@ -10,6 +10,7 @@ import com.ll.service.utils.GetServiceInfo;
 import com.ll.service.utils.GetSystemCodeAndPath;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -33,8 +34,8 @@ public class MOperation {
     private static ExecutorService executorService = Executors.newFixedThreadPool(2);
 
 
-
-
+    @Autowired
+    private ServerClient serverClient;
     // 针对复旦的系统进行开发的相应接口
     @PostMapping("/getFudanInfoOfOneService")
     public MResponse getFudanInfoOfOneService(@RequestBody MServiceRegisterBean mServiceRegisterBean){
@@ -45,7 +46,7 @@ public class MOperation {
                     mServiceRegisterBean.getGitUrl(), mServiceRegisterBean.getBranch(),mServiceRegisterBean.getServiceName());
             MService mService = GetServiceInfo.getMservice(mPathInfo);
             List<MService> list = new ArrayList<MService>(){{add(mService);}};
-            MResponse response = ServerClient.pushServiceInfos(list);
+            MResponse response = serverClient.pushServiceInfos(list);
             logger.info(String.format("Receive %s from server", response.getStatus()));
         });
         return MResponse.successResponse();
@@ -59,7 +60,7 @@ public class MOperation {
             Map<String, MPathInfo> map = GetSystemCodeAndPath.getcode(mSystemInfo.getGitUrl(), mSystemInfo.getBranch());
             List<MService> allMService =
                     map.values().stream().map(mPathInfo-> GetServiceInfo.getMservice(mPathInfo)).collect(Collectors.toList());
-            MResponse response = ServerClient.pushServiceInfos(allMService);
+            MResponse response = serverClient.pushServiceInfos(allMService);
             logger.info(String.format("Receive %s from server", response.getStatus()));
         });
         return MResponse.successResponse();

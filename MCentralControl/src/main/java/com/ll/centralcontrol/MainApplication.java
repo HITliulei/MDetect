@@ -14,7 +14,6 @@ import org.springframework.web.client.RestTemplate;
  */
 
 @SpringBootApplication
-
 @MapperScan("com.ll.centralcontrol.mapper")
 public class MainApplication {
 

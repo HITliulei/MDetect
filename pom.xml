@@ -13,7 +13,6 @@
         <module>MClusterController</module>
         <module>MMonitor</module>
         <module>MServiceAnalysis</module>
-        <module>MProrammingFramework</module>
     </modules>
 
 
