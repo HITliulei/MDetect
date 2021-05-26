@@ -1,12 +1,12 @@
 package com.ll.kubernetes.utils;
 
 
+import com.ll.common.utils.MResponse;
 import com.ll.kubernetes.bean.Deployinfo;
 import com.ll.kubernetes.bean.MDockerInfoBean;
 import com.ll.kubernetes.bean.MPodDockerInfo;
 import com.ll.kubernetes.bean.Node.Node;
 import com.ll.kubernetes.bean.Node.NodeList;
-import com.ll.kubernetes.bean.MResponse;
 import com.ll.kubernetes.bean.datacollect.PodInfo;
 import com.ll.kubernetes.bean.datacollect.ResultDeploy;
 import io.kubernetes.client.ApiClient;

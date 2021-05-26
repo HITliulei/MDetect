@@ -1,4 +1,4 @@
-package com.ll.kubernetes.bean;
+package com.ll.common.utils;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -27,5 +27,10 @@ public class MResponse<T> {
     public MResponse<T> status(String s){
         this.status = s;
         return this;
+    }
+
+
+    public static MResponse successResponse(){
+        return new MResponse().status("success");
     }
 }

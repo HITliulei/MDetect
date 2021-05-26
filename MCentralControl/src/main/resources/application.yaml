@@ -1,2 +1,12 @@
 server:
-  port: 8080
+  port: 18180
+
+spring:
+  application:
+    name: MCenterControl
+  datasource:
+    name: service_evolution
+    url: jdbc:mysql://192.168.1.102:3306/service_evolution
+    username: root
+    password: ices504
+    driver-class-name: com.mysql.jdbc.Driver

@@ -12,6 +12,15 @@
     <artifactId>MClusterController</artifactId>
 
     <dependencies>
+
+
+        <dependency>
+            <groupId>org.example</groupId>
+            <artifactId>MCommon</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+
         <dependency>
             <groupId>io.kubernetes</groupId>
             <artifactId>client-java</artifactId>
@@ -19,6 +28,8 @@
             <version>5.0.0</version>
             <scope>compile</scope>
         </dependency>
+
+
     </dependencies>
 
 </project>

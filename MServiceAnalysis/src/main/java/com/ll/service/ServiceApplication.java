@@ -1,6 +1,5 @@
-package com.ll.centralcontrol;
+package com.ll.service;
 
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -10,22 +9,20 @@ import org.springframework.web.client.RestTemplate;
 /**
  * @author Lei
  * @version 0.1
- * @date 2021/5/10
+ * @date 2021/5/26
  */
 
 @SpringBootApplication
-
-@MapperScan("com.ll.centralcontrol.mapper")
-public class MainApplication {
+public class ServiceApplication {
 
 
     public static void main(String[] args) {
-        SpringApplication.run(MainApplication.class);
+        SpringApplication.run(ServiceApplication.class);
     }
 
 
     @Bean
-    public RestTemplate getRestTemplate(){
+    public RestTemplate get(){
         return new RestTemplateBuilder().build();
     }
 }

@@ -1,10 +1,10 @@
 package com.ll.kubernetes.controller;
 
+import com.ll.common.utils.MResponse;
 import com.ll.kubernetes.bean.Deployinfo;
 import com.ll.kubernetes.bean.MDockerInfoBean;
 import com.ll.kubernetes.bean.MPodDockerInfo;
 import com.ll.kubernetes.bean.Node.NodeList;
-import com.ll.kubernetes.bean.MResponse;
 import com.ll.kubernetes.bean.datacollect.ResultDeploy;
 import com.ll.kubernetes.utils.K8sutils;
 import io.kubernetes.client.models.V1Pod;
@@ -38,15 +38,16 @@ public class k8scontrol {
      * @return MDockerInfoBean
      */
     @GetMapping("/getDockerInfoByip/{ip}")
-    public MDockerInfoBean getDockerinfoByip(@PathVariable("ip") String ip){
+    public MResponse<MDockerInfoBean> getDockerinfoByip(@PathVariable("ip") String ip){
         log.info("ip address : " + ip);
-        return this.k8sutils.getDockerInfoByIpAddr(ip);
+
+        return new MResponse<MDockerInfoBean>().data(this.k8sutils.getDockerInfoByIpAddr(ip));
     }
 
     @GetMapping("/getDockerInfoByPodName/{name}")
-    public MDockerInfoBean getDockerInfoByPodName(@PathVariable("name") String name){
+    public MResponse<MDockerInfoBean> getDockerInfoByPodName(@PathVariable("name") String name){
         log.info("pod name : " + name);
-        return this.k8sutils.getDockerInfoByPodName(name);
+        return new MResponse<MDockerInfoBean>().data(this.k8sutils.getDockerInfoByPodName(name));
     }
 
     @GetMapping("/getAllPodinfoWithoutDocker")
@@ -58,15 +59,15 @@ public class k8scontrol {
     }
 
     @GetMapping("/getPodDockerInfoByPodName/{podname}")
-    public MPodDockerInfo getPodDockerInfoByPodName(@PathVariable("podname") String podname){
+    public MResponse<MPodDockerInfo> getPodDockerInfoByPodName(@PathVariable("podname") String podname){
         log.info("pod name: " + podname);
-        return this.k8sutils.getPodDockerInfoByName(podname);
+        return new MResponse<MPodDockerInfo>().data(this.k8sutils.getPodDockerInfoByName(podname));
     }
 
     @GetMapping("/getPodDockerInfoByPodIp/{podIp}")
-    public MPodDockerInfo getPodDockerInfoByPodIp(@PathVariable("podIp") String podIp){
+    public MResponse<MPodDockerInfo> getPodDockerInfoByPodIp(@PathVariable("podIp") String podIp){
         log.info("pod Ip: " + podIp);
-        return this.k8sutils.getPodDockerInfoByIp(podIp);
+        return new MResponse<MPodDockerInfo>().data(this.k8sutils.getPodDockerInfoByIp(podIp));
     }
 
     @GetMapping("/getAllPodDockerInfo")
@@ -101,17 +102,17 @@ public class k8scontrol {
      * @return
      */
     @GetMapping("/getAllNodeLable")
-    public Map<String, String> getallNodeLabel(){
-        return this.k8sutils.getAllnode();
+    public MResponse<Map<String, String>> getallNodeLabel(){
+        return new MResponse<Map<String, String>>().data(this.k8sutils.getAllnode());
     }
 
     @GetMapping("/getNodeLabelByNode/{node}")
-    public String getNOdeLabelByNode(@PathVariable("node") String node){
-        return this.k8sutils.getLabelByNode(node);
+    public MResponse<String> getNOdeLabelByNode(@PathVariable("node") String node){
+        return new MResponse<String>().data(this.k8sutils.getLabelByNode(node));
     }
     @GetMapping("/getNodeByNodeLabel/{nodeLabel}")
-    public String getNodeByNodeLabel(@PathVariable("nodeLabel") String nodeLabel){
-        return this.k8sutils.getNodeBylabel(nodeLabel);
+    public MResponse<String> getNodeByNodeLabel(@PathVariable("nodeLabel") String nodeLabel){
+        return new MResponse<String>().data(this.k8sutils.getNodeBylabel(nodeLabel));
     }
 
     /**
@@ -119,8 +120,8 @@ public class k8scontrol {
      * @return
      */
     @GetMapping("/getAllNode")
-    public List<String> getAllNode(){
-        return new ArrayList<>(this.k8sutils.getAllnode().keySet());
+    public MResponse<List<String>> getAllNode(){
+        return new MResponse<List<String>>().data(new ArrayList<>(this.k8sutils.getAllnode().keySet()));
     }
 
     /**
@@ -128,8 +129,8 @@ public class k8scontrol {
      * @return
      */
     @GetMapping("/getNodeInfo")
-    public NodeList getNodeInfo(){
-        return this.k8sutils.getNodeInfo();
+    public MResponse<NodeList> getNodeInfo(){
+        return new MResponse<NodeList>().data(this.k8sutils.getNodeInfo());
     }
 
     /**
@@ -149,10 +150,10 @@ public class k8scontrol {
      * @return
      */
     @GetMapping("/onlydeployServiceWithPod")
-    public ResultDeploy onlydeployservicePod(@RequestBody Deployinfo deployinfo){
+    public MResponse<ResultDeploy> onlydeployservicePod(@RequestBody Deployinfo deployinfo){
         log.info("the deploy info is: " + deployinfo);
         ResultDeploy a  = this.k8sutils.onlyDeployPod(deployinfo);
-        return a==null?new ResultDeploy():a;
+        return new MResponse<ResultDeploy>().data(a==null?new ResultDeploy():a);
 
     }
 
@@ -167,15 +168,15 @@ public class k8scontrol {
      * @return
      */
    @GetMapping("/getService/{serviceName}")
-    public V1Service getService(@PathVariable("serviceName") String serviceName){
+    public MResponse<V1Service> getService(@PathVariable("serviceName") String serviceName){
        log.info("check the service : " + serviceName);
-       return this.k8sutils.getService(serviceName);
+       return new MResponse<V1Service>().data(this.k8sutils.getService(serviceName));
    }
 
    @GetMapping("/checkoutIfAllPodsRunning")
-    public boolean checkoutIfAllPodsRunning(){
+    public MResponse<Boolean> checkoutIfAllPodsRunning(){
        log.info("checkout if all the pods is ready");
-       return this.k8sutils.checkoutIfAllPodsRunning();
+       return new MResponse<Boolean>().data(this.k8sutils.checkoutIfAllPodsRunning());
     }
     @GetMapping("/deletenotRun")
     public void deletenotRun(){
@@ -185,10 +186,10 @@ public class k8scontrol {
 
     // deploy give-command-service
     @GetMapping("/deployGiveCommand/{name}/{times}")
-    public ResultDeploy onlydeployGiveCommandService(@PathVariable("name") String name, @PathVariable("times")int times){
+    public MResponse<ResultDeploy> onlydeployGiveCommandService(@PathVariable("name") String name, @PathVariable("times")int times){
         log.info("deploy give-command-service in every node");
         ResultDeploy resultDeploy = this.k8sutils.deployGive(name, times);
-        return resultDeploy==null?new ResultDeploy():resultDeploy;
+        return new MResponse<ResultDeploy>().data(resultDeploy==null?new ResultDeploy():resultDeploy);
     }
 
 
