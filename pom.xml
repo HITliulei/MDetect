@@ -13,6 +13,7 @@
         <module>MClusterController</module>
         <module>MMonitor</module>
         <module>MServiceAnalysis</module>
+        <module>MProgrammingFramework</module>
     </modules>
 
 
