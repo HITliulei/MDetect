@@ -24,5 +24,6 @@ public class Mvf4msDep {
 
     // For json parsing
     public Mvf4msDep() {
+
     }
 }

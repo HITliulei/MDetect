@@ -5,6 +5,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 /**
  * @author Lei
@@ -13,7 +15,7 @@ import org.springframework.web.client.RestTemplate;
  */
 
 @SpringBootApplication
-public class ServiceApplication {
+public class ServiceApplication extends WebMvcConfigurerAdapter {
 
 
     public static void main(String[] args) {
@@ -24,5 +26,13 @@ public class ServiceApplication {
     @Bean
     public RestTemplate get(){
         return new RestTemplateBuilder().build();
+    }
+
+
+    static final String ORIGINS[] = new String[] { "GET", "POST", "PUT", "DELETE" };
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**").allowedOrigins("*").allowCredentials(true).allowedMethods(ORIGINS)
+                .maxAge(3600);
     }
 }

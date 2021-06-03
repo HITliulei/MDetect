@@ -73,7 +73,7 @@ public class GetServiceInfo {
             }
         }
         Map spring = (Map) obj.get("spring");
-        String serviceNmae = ((Map) spring.get("application")).get("nameQW").toString();
+        String serviceNmae = ((Map) spring.get("application")).get("name").toString();
         mService.setServiceName(serviceNmae);
         Map mvf4ms = (Map)obj.get("mvf4ms");
         String version = (String) mvf4ms.get("version");

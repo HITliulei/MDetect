@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: NULL                              # instance Id
+  labels:
+    app: NULL                             # service Name微服务名称
+spec:
+  containers:
+    - name: NULL
+      image: NULL
+      imagePullPolicy: Always
+      ports:
+        - containerPort: NULL
+      readinessProbe:
+        tcpSocket:
+          port: NULL
+        initialDelaySeconds: 160
+        periodSeconds: 10
+        timeoutSeconds: 5
+  nodeSelector:
+    node: null

@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: null
+spec:
+  selector:
+    matchLabels:
+      app: null
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: null
+    spec:
+      containers:
+        - name: null
+          image: null
+          imagePullPolicy: Always
+          ports:
+            - containerPort: null
+#          resources:
+#            requests:
+#              cpu: 50m
+#              memory: 100Mi
+#            limits:
+#              cpu: 200m
+#              memory: 500Mi
+          readinessProbe:
+            tcpSocket:
+              port: 12342
+            initialDelaySeconds: 160
+            periodSeconds: 10
+            timeoutSeconds: 5
+      nodeSelector:
+        node: null

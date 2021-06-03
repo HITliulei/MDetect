@@ -1,5 +1,6 @@
 package com.ll.common.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.ll.common.base.MUniqueObject;
 import lombok.Getter;
 import lombok.Setter;
@@ -50,5 +51,10 @@ public class MSvcInterface extends MUniqueObject {
         this.params = new ArrayList<>(other.params);
         this.returnType = other.returnType;
         this.serviceId = other.serviceId;
+    }
+
+    @Override
+    public String toString(){
+        return JSONObject.toJSONString(this);
     }
 }

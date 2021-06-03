@@ -84,7 +84,7 @@ public class GetSystemCodeAndPath {
         String path = basePath + "/" + serviceName;
         MPathInfo MPathInfo = new MPathInfo();
         File file_findapplication = new File(path + "/" + "src/main/resources");
-        String ymlfile = path + "src/main/resources/" + GetSourceCode.getYmlPath(file_findapplication);
+        String ymlfile = path +"/src/main/resources/" + GetSourceCode.getYmlPath(file_findapplication);
 
         MPathInfo.setApplicationPath(ymlfile);
         List<File> pathList = GetSourceCode.getListFiles(new File(path + "/src/main/java"));

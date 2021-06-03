@@ -1,5 +1,6 @@
 package com.ll.common.service;
 
+import com.alibaba.fastjson.JSONObject;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -53,5 +54,10 @@ public class MParamer {
     @Override
     public int hashCode() {
         return Objects.hash(name, requestname, defaultObject, type, method);
+    }
+
+    @Override
+    public String toString(){
+        return JSONObject.toJSONString(this);
     }
 }

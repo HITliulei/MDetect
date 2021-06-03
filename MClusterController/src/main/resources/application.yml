@@ -1,0 +1,6 @@
+server:
+  port: 32222
+
+spring:
+  application:
+    name: MClusterAgent

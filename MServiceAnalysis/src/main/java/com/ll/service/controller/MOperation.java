@@ -67,5 +67,18 @@ public class MOperation {
     }
 
 
+    public static void main(String[] args) {
+        MPathInfo mPathInfo = GetSystemCodeAndPath.getcodeByserviceName(
+                "http://192.168.1.104:12345/MSystemEvolution/train-ticket.git",
+                "framework",
+                "ts-auth-service");
+        System.out.println("---------------------------");
+        System.out.println(mPathInfo);
+        MService mService = GetServiceInfo.getMservice(mPathInfo);
+        System.out.println("------------------------------");
+        System.out.println(mService);
+    }
+
+
 
 }

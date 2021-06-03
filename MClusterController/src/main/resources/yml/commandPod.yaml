@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: null                              # instance Id
+  labels:
+    app: null                             # service Name微服务名称
+spec:
+  containers:
+    - name: null
+      image: null
+      imagePullPolicy: Always
+      ports:
+        - containerPort: null
+  nodeSelector:
+    node: null

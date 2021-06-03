@@ -1,5 +1,6 @@
 package com.ll.common.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.ll.common.base.MUniqueObject;
 import lombok.Getter;
 import lombok.Setter;
@@ -70,5 +71,11 @@ public class MService extends MUniqueObject {
     @Override
     public int hashCode() {
         return Objects.hash(serviceId);
+    }
+
+
+    @Override
+    public String toString(){
+        return JSONObject.toJSONString(this);
     }
 }
