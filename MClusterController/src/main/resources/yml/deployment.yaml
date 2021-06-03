@@ -31,5 +31,12 @@ spec:
             initialDelaySeconds: 160
             periodSeconds: 10
             timeoutSeconds: 5
+          volumeMounts:
+            - mountPath: /var/log/mclient
+              name: log-volume
+      volumes:
+        - name: log-volume
+          hostPath:
+            path: /data/hexiang/test-dir/log
       nodeSelector:
         node: null

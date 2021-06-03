@@ -1,11 +1,13 @@
 package com.ll.framework.config;
 
 import com.ll.framework.aop.MCollectDataAop;
+import com.sun.xml.internal.ws.addressing.W3CAddressingMetadataConstants;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 
@@ -17,10 +19,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 
 @Configuration
-public class MClientAutoComponentScan extends WebMvcConfigurerAdapter {
+public class MClientAutoComponentScan extends WebMvcConfigurationSupport {
 
     @Bean
     public MCollectDataAop mCollectDataAop(){return new MCollectDataAop();}
+
+
     /**
      * 跨域 习惯性跨域
      */
@@ -30,13 +34,29 @@ public class MClientAutoComponentScan extends WebMvcConfigurerAdapter {
         registry.addMapping("/**").allowedOrigins("*").allowCredentials(true).allowedMethods(ORIGINS)
                 .maxAge(3600);
     }
+
+
     @Value("${mvf4ms.version}")
     private String version;
 
+    @Value("${spring.application.name}")
+    private String name;
 
-    @Qualifier("stringVersion")
+
+    @Qualifier("serviceVersion")
     @Bean
-    public String getVersiob(){
+    public String getVersion(){
         return version;
     }
+    @Qualifier("serviceName")
+    @Bean
+    public String getName(){
+        return name;
+    }
+    @Qualifier("serviceId")
+    @Bean
+    public String getServiceId(){
+        return new StringBuilder(name).append("_").append(version).toString();
+    }
+
 }

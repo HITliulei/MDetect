@@ -15,7 +15,8 @@ import java.util.Map;
 
 @Getter
 @Setter
-public class TimeMemAndCpu {
+public class
+TimeMemAndCpu {
 
     private Date date;
 

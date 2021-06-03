@@ -11,11 +11,19 @@ spec:
       imagePullPolicy: Always
       ports:
         - containerPort: NULL
+      volumeMounts:
+        - mountPath: /var/log/mclient
+          name: log-volume
       readinessProbe:
         tcpSocket:
           port: NULL
         initialDelaySeconds: 160
         periodSeconds: 10
         timeoutSeconds: 5
+
+  volumes:
+    - name: log-volume
+      hostPath:
+        path: /data/liulei/test-dir/log
   nodeSelector:
     node: null

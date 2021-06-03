@@ -11,6 +11,7 @@ import com.ll.service.utils.GetSystemCodeAndPath;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -32,7 +33,6 @@ public class MOperation {
 
     private static Logger logger = LogManager.getLogger(MOperation.class);
     private static ExecutorService executorService = Executors.newFixedThreadPool(2);
-
 
     @Autowired
     private ServerClient serverClient;

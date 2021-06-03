@@ -1,5 +1,6 @@
 package com.ll.service;
 
+import com.ll.framework.ano.MClient;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  */
 
 @SpringBootApplication
+@MClient
 public class ServiceApplication extends WebMvcConfigurerAdapter {
 
 

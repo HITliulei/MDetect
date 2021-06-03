@@ -199,6 +199,8 @@ public class k8scontrol {
        this.k8sutils.deleteService(serviceName);
     }
 
+
+
     @GetMapping("/deleteServiceAndPods/{serviceName}")
     public void deleteServiceAndPods(@PathVariable("serviceName") String serviceName){
         log.info("delete service : " + serviceName);

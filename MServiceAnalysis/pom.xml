@@ -17,6 +17,13 @@
             <artifactId>MCommon</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+
+
+        <dependency>
+            <groupId>org.example</groupId>
+            <artifactId>MProgrammingFramework</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
         <!-- java parse 用于源码解析-->
         <dependency>
             <groupId>com.github.javaparser</groupId>
