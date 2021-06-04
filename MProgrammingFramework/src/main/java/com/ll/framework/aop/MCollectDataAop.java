@@ -96,7 +96,7 @@ public class MCollectDataAop {
         }
 
 
-        // 保存到本地日志信息
+        // 保存到本地日志信息                    
         Trace trace = new Trace(ex,
                 httpHeaders.get("traceId").toString(),
                 request.getLocalAddr(),
@@ -108,6 +108,8 @@ public class MCollectDataAop {
                 request.getMethod(),
                 result.toString());
         System.out.println("保存到本地的trace信息为: \n" + trace.toString());
+
+        // 保存到本地的消息
     }
 
 }
