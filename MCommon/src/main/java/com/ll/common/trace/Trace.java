@@ -28,6 +28,9 @@ public class Trace {
     // 当前微服务的ip
     private String localIp;
 
+    // 当前微服的名称
+    private String serviceId;
+
     // 请求的是哪一个路径
     private String requestPath;
 

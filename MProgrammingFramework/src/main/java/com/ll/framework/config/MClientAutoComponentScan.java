@@ -1,15 +1,12 @@
 package com.ll.framework.config;
 
 import com.ll.framework.aop.MCollectDataAop;
-import com.sun.xml.internal.ws.addressing.W3CAddressingMetadataConstants;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-
 
 /**
  * @author Lei

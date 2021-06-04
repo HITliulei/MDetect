@@ -3,6 +3,7 @@ package com.ll.framework.aop;
 import com.ll.common.fudan.Response;
 import com.ll.common.trace.Result;
 import com.ll.common.trace.Trace;
+import com.ll.common.utils.MJSONUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
@@ -35,10 +36,6 @@ public class MCollectDataAop {
     @Autowired
     @Qualifier("serviceId")
     private String serviceId;
-
-
-    private static long startTime;
-
     private static ThreadLocal<String> startTimes = new ThreadLocal<String>();
 
     @Pointcut("execution(* *..controller.*.*(..))")
@@ -50,26 +47,20 @@ public class MCollectDataAop {
         DateTime startTime = DateTime.now();
         Object[] args = joinPoint.getArgs();
         HttpHeaders httpHeaders = null;
-
         startTimes.set(startTime.toString());
-
-
         if (args.length !=0){
             if (args[args.length - 1] instanceof HttpHeaders){
                 httpHeaders = (HttpHeaders)args[args.length-1];
                 httpHeaders.set("startTime",startTime.toString());
             }else{
-                System.out.println("不存在http");
                 httpHeaders = new HttpHeaders();
                 httpHeaders.set("startTime",startTime.toString());
             }
         }else{
-            System.out.println("不存在http");
             httpHeaders = new HttpHeaders();
             httpHeaders.set("startTime",startTime.toString());
         }
         if(httpHeaders.get("traceId") == null){
-            System.out.println("不存在traceId");
             String traceId = UUID.randomUUID().toString();
             httpHeaders.set("traceId", traceId);
         }
@@ -82,7 +73,7 @@ public class MCollectDataAop {
 
         // 获取返回的结果
         Result result = Result.SUCCESS;
-        if (object.getClass().equals(HttpEntity.class)){
+        if (object instanceof HttpEntity){
             HttpEntity httpEntity = (HttpEntity)object;
             Response response = (Response) httpEntity.getBody();
             result = response.getStatus()==1?Result.SUCCESS:Result.FAILED;
@@ -93,7 +84,6 @@ public class MCollectDataAop {
             if (args[args.length-1] instanceof HttpHeaders){
                 httpHeaders = (HttpHeaders)args[args.length-1];
             }else{
-                System.out.println("不存在http");
                 httpHeaders = new HttpHeaders();
             }
         }else {
@@ -110,12 +100,14 @@ public class MCollectDataAop {
         Trace trace = new Trace(ex,
                 httpHeaders.get("traceId").toString(),
                 request.getLocalAddr(),
+                serviceId,
                 request.getRequestURL().toString(),
                 request.getRemoteAddr(),
-                httpHeaders.get("startTime").toString(),
+                startTimes.get(),
                 endTime.toString(),
                 request.getMethod(),
                 result.toString());
+        System.out.println("保存到本地的trace信息为: \n" + trace.toString());
     }
 
 }
