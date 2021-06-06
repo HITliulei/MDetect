@@ -250,7 +250,7 @@ def make_app():
     ])
 
 if __name__ == '__main__':
-    # test()创建成功创建成功
+    # TailerTest()创建成功创建成功
     # app = make_app()
     # app.listen(18000)
     # tornado.ioloop.IOLoop.current().start()

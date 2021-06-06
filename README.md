@@ -11,11 +11,11 @@
 - MMontinor:18081： 性能检测工具， 可以检测pod 以及 node cpu以及mem的情况
 - MClusterController:18082： k8s集群控制工具， 部署pod 发布服务用的
 - MServiceAnalysis:18083： 分析各个微服务的详细信息
-
 运行时的调度组件
 - MDeployment:18084： 部署组件， 调用ClusterController 对集群进行部署操作（根据的是MService Analysis的服务信息）
 - MDataInit:18085: 用于数据的初始化（针对的是复旦的系统， 各个系统不一致）
 - MUSerCommand:18086： 发布用户需求，对系统进行压力的测试
+- MDataCollect: 收集数据组件  
 - MEmpiricalComparison： 用于实证对比， 得到的结果为 （主要是）
 
 

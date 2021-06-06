@@ -22,9 +22,6 @@ import java.util.Map;
 public class GetSystemCodeAndPath {
 
     private static Logger logger = LogManager.getLogger(GetSystemCodeAndPath.class);
-
-
-
     public static Map<String, MPathInfo> getcode(String gitUrl, String branch){
         Map<String, MPathInfo> map = new HashMap<>();
         GetSourceCode.deleteDir(ServiceConfig.CODE_DIWNLOAD_PATH);
