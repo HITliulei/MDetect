@@ -23,4 +23,14 @@ public class ServiceConfig {
 
 
 
+    //保存路径信息
+    public final static String TRACEINFO_PATH = "/tmp/data/traceData/";
+
+
+    //本地路径
+    public final static String TACELOCAL_PATH = "/data/liulei/traceInfo/";
+
+
+
+
 }

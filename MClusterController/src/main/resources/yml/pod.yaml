@@ -12,18 +12,17 @@ spec:
       ports:
         - containerPort: NULL
       volumeMounts:
-        - mountPath: /var/log/mclient
-          name: log-volume
+        - mountPath: /var/data/traceData
+          name: trace_path
       readinessProbe:
         tcpSocket:
           port: NULL
         initialDelaySeconds: 160
         periodSeconds: 10
         timeoutSeconds: 5
-
   volumes:
-    - name: log-volume
+    - name: trace_path
       hostPath:
-        path: /data/liulei/test-dir/log
+        path: /data/liulei/traceInfo
   nodeSelector:
     node: null

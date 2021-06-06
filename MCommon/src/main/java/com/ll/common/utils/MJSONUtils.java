@@ -62,4 +62,14 @@ public class MJSONUtils {
         }
         return null;
     }
+
+
+    /**
+     * 将字符穿转化为JSONObject
+     * @param string
+     * @return
+     */
+    public static JSONObject getJsonObject(String string){
+        return JSONObject.parseObject(string);
+    }
 }

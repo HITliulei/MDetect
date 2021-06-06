@@ -17,7 +17,6 @@ import java.util.Map;
  * @date 2021/5/26
  */
 public class MURIUtils {
-
     private final static Logger logger = LogManager.getLogger(MURIUtils.class);
 
     public static URI getRemoteUri(String ipAddr, int port, String path) {
