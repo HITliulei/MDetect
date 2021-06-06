@@ -48,4 +48,7 @@ public class MIDUtils {
     public static void main(String[] args) {
         System.out.println(uniqueInstanceId("SampleGaoDe", "1.2.3"));
     }
+
+
+
 }

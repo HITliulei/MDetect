@@ -17,6 +17,7 @@ import java.util.*;
 @Setter
 @ToString
 public class MSvcInterface extends MUniqueObject {
+    private String interfaceId;
     private String patternUrl;
     private String functionName;
     private String requestMethod;

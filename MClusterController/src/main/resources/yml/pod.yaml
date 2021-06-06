@@ -20,6 +20,9 @@ spec:
         initialDelaySeconds: 160
         periodSeconds: 10
         timeoutSeconds: 5
+#      env: # java的环境变量
+#        - name: REGISTRY
+#          value: "10.244.2.2:8080"
   volumes:
     - name: trace_path
       hostPath:

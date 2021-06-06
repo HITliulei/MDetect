@@ -1,5 +1,6 @@
 package com.ll.framework.config;
 
+import com.ll.common.service.MSvcVersion;
 import com.ll.framework.aop.MCollectDataAop;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -42,18 +43,20 @@ public class MClientAutoComponentScan extends WebMvcConfigurationSupport {
 
     @Qualifier("serviceVersion")
     @Bean
-    public String getVersion(){
-        return version;
+    public MSvcVersion getVersion(){
+        return MSvcVersion.fromStr(version);
     }
     @Qualifier("serviceName")
     @Bean
     public String getName(){
         return name;
     }
+
+
     @Qualifier("serviceId")
     @Bean
     public String getServiceId(){
-        return new StringBuilder(name).append("_").append(version).toString();
+        return new StringBuilder(name).append("_").append(MSvcVersion.fromStr(version).toCommonStr()).toString();
     }
 
 }

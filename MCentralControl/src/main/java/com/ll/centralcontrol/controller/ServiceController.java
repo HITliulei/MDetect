@@ -67,7 +67,7 @@ public class ServiceController {
 
         for (MService service : serviceList) {
             for (MSvcInterface serviceInterface : service.getServiceInterfaceMap().values()) {
-                serviceInterface.setId(MIDUtils.uniqueInterfaceId(service.getServiceName(), serviceInterface.getFunctionName()));
+//                serviceInterface.setId(MIDUtils.uniqueInterfaceId(service.getServiceName(), serviceInterface.getFunctionName()));
                 serviceInterface.setServiceId(service.getId());
             }
 

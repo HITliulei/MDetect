@@ -34,6 +34,9 @@ public class Trace {
     // 请求的是哪一个路径
     private String requestPath;
 
+    // 请求的是哪一个接口：
+    private String requestInterface;
+
     // 请求来源的ip请求
     private String sourceIp;
 

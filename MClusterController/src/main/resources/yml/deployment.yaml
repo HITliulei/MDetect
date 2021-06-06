@@ -32,11 +32,11 @@ spec:
             periodSeconds: 10
             timeoutSeconds: 5
           volumeMounts:
-            - mountPath: /var/log/mclient
-              name: log-volume
+            - mountPath: /var/data/traceData
+              name: trace_info
       volumes:
-        - name: log-volume
+        - name: trace_info
           hostPath:
-            path: /data/hexiang/test-dir/log
+            path: /data/liulei/traceInfo
       nodeSelector:
         node: null

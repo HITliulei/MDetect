@@ -24,6 +24,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -56,14 +57,14 @@ public class MCollectDataAop {
         if (args.length !=0){
             if (args[args.length - 1] instanceof HttpHeaders){
                 httpHeaders = (HttpHeaders)args[args.length-1];
-                httpHeaders.set("startTime",startTime.toString());
+//                httpHeaders.set("startTime",startTime.toString());
             }else{
                 httpHeaders = new HttpHeaders();
-                httpHeaders.set("startTime",startTime.toString());
+//                httpHeaders.set("startTime",startTime.toString());
             }
         }else{
             httpHeaders = new HttpHeaders();
-            httpHeaders.set("startTime",startTime.toString());
+//            httpHeaders.set("startTime",startTime.toString());
         }
         if(httpHeaders.get("traceId") == null){
             String traceId = UUID.randomUUID().toString();
@@ -76,23 +77,17 @@ public class MCollectDataAop {
         DateTime endTime = DateTime.now();
         Object[] args = joinPoint.getArgs();
 
+        String class_name = joinPoint.getTarget().getClass().getName();  // 类的名字
+        String method_name = joinPoint.getSignature().getName(); // 方法的名字
+
+
         // 获取返回的结果
         Result result = Result.SUCCESS;
-        JSONObject jsonObject = JSONObject.parseObject(object.toString());
-        if (jsonObject.containsKey("body")){
-            System.out.println("直接使用json的格式进行抽取， 这个返回类型为HttpEtity");
-            JSONObject jsonObject1 = jsonObject.getJSONObject("body");
-            result = Result.valueOf(jsonObject1.get("status").toString());
-        }else if (jsonObject.containsKey("data")){
-            System.out.println("直接使用json的格式进行抽取， 这个返回类型为Response");
-            result = Result.valueOf(jsonObject.get("status").toString());
+        if (object instanceof HttpEntity){
+            HttpEntity httpEntity = (HttpEntity)object;
+            System.out.println(" 查看是否包含这些信息 ： " + httpEntity.getBody().toString().contains("status=1"));
+            result = httpEntity.getBody().toString().contains("status=1")?Result.SUCCESS:Result.FAILED;
         }
-//这个数据类型在ts-service中， 不能拿到。
-//        if (object instanceof HttpEntity){
-//            HttpEntity httpEntity = (HttpEntity)object;
-//            Response response = (Response) httpEntity.getBody();
-//            result = response.getStatus()==1?Result.SUCCESS:Result.FAILED;
-//        }
 
         HttpHeaders httpHeaders = null;
         if (args.length !=0){
@@ -109,7 +104,10 @@ public class MCollectDataAop {
         if (httpHeaders.get("ex_name") != null && httpHeaders.get("ex_times") != null){
             ex = httpHeaders.get("ex_name").toString() +"_" + httpHeaders.get("ex_times").toString();
         }
-
+        if (ex.equals("wrong_name_time")){
+            // 初始化数据的时候， 不给予ex的名字， 不进行存储，
+            return;
+        }
 
         // 保存到本地日志信息
         Trace trace = new Trace(ex,
@@ -117,15 +115,22 @@ public class MCollectDataAop {
                 request.getLocalAddr(),
                 serviceId,
                 request.getRequestURL().toString(),
+                String.format("%s_%s", serviceId, method_name),
                 request.getRemoteAddr(),
                 startTimes.get(),
                 endTime.toString(),
                 request.getMethod(),
                 result.toString());
         System.out.println("保存到本地的trace信息为: \n" + trace.toString());
-
         // 保存到本地的消息, 至于需不需要在进行一个logstash统一的收集， 后续再看吧
-        MFileUtils.writeFile(new File(ServiceConfig.TRACEINFO_PATH), trace.toString());
+        MFileUtils.writeFile(new File(ServiceConfig.TRACEINFO_PATH +File.separator+ ex+ File.separator + serviceId), trace.toString());
+
+
+    }
+
+
+    public static void main(String[] args) {
+        MFileUtils.writeFile(new File(ServiceConfig.TRACEINFO_PATH +File.separator+ "wrong_name_time" + File.separator + "microservice"), "qerqwerqwer");
     }
 
 }

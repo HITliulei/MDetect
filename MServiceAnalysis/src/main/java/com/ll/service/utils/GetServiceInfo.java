@@ -31,7 +31,7 @@ public class GetServiceInfo {
         mService.setServiceId(mService.getServiceName() + "_" + mService.getServiceVersion().toCommonStr());
         Map<String, MSvcInterface> map = new HashMap<>();
         for (String s : pathInfo.getControllerListPath()) {
-            map.putAll(getServiceInfo(s,mService.getBasePath()));
+            map.putAll(getServiceInfo(mService.getServiceId(),s,mService.getBasePath()));
         }
         mService.setServiceInterfaceMap(map);
         return mService;
@@ -113,7 +113,7 @@ public class GetServiceInfo {
      *
      * @return Service类，返回该类的信息
      */
-    public static Map<String, MSvcInterface> getServiceInfo(String codepath, String contextPath) {
+    public static Map<String, MSvcInterface> getServiceInfo(String serviceId, String codepath, String contextPath) {
         Map<String, MSvcInterface> map = new HashMap<>();
         CompilationUnit compilationUnit = null;
         File file;
@@ -217,11 +217,11 @@ public class GetServiceInfo {
 //                        map.put(string, mSvcInterface);
 //                    }
 //                }
+                mSvcInterface.setInterfaceId(String.format("%s_%s", serviceId, mSvcInterface.getFunctionName()));
                 for (String patternUrl : pathurl) {
                     mSvcInterface.setPatternUrl(patternUrl);
-                    map.put(mSvcInterface.getPatternUrl(), new MSvcInterface(mSvcInterface));
+                    map.put(mSvcInterface.getFunctionName() + mSvcInterface.getPatternUrl() , new MSvcInterface(mSvcInterface));
                 }
-                map.put(mSvcInterface.getPatternUrl(), mSvcInterface);
             }
         }
         return map;
