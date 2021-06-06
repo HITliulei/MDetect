@@ -96,7 +96,7 @@ public class MCollectDataAop {
         }
 
 
-        // 保存到本地日志信息                    
+        // 保存到本地日志信息
         Trace trace = new Trace(ex,
                 httpHeaders.get("traceId").toString(),
                 request.getLocalAddr(),
