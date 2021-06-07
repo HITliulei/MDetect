@@ -14,9 +14,16 @@ import lombok.ToString;
 @ToString
 public class MResponse<T> {
 
+    private int code;
+
     private String status;
 
     private T data;
+
+    public MResponse<T> code(int code){
+        this.code = code;
+        return this;
+    }
 
 
     public MResponse<T> data(T t){
@@ -32,5 +39,10 @@ public class MResponse<T> {
 
     public static MResponse successResponse(){
         return new MResponse().status("success");
+    }
+
+
+    public static MResponse failedResponse(){
+        return new MResponse().status("failed");
     }
 }

@@ -15,6 +15,7 @@
         <module>MServiceAnalysis</module>
         <module>MProgrammingFramework</module>
         <module>MDataCollect</module>
+        <module>MBuildCenter</module>
     </modules>
 
 
@@ -67,11 +68,11 @@
         </dependency>
 
 
-        <dependency>
-            <groupId>org.services</groupId>
-            <artifactId>ts-common</artifactId>
-            <version>0.1.0</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.services</groupId>-->
+<!--            <artifactId>ts-common</artifactId>-->
+<!--            <version>0.1.0</version>-->
+<!--        </dependency>-->
     </dependencies>
 
 

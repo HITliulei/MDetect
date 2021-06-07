@@ -1,0 +1,17 @@
+server:
+  port: 18088
+
+
+spring:
+  application:
+    name: mbuildcenter
+
+
+jenkins:
+  ip: "192.168.0.107"
+  port: 8079
+
+docker:
+  registry:
+    ip: "192.168.0.107"
+    port: 5000

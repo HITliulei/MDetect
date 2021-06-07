@@ -72,7 +72,6 @@ def createUsersAndConnects(name, times):
             'documentNum': str(int(random.random()*1000000)) + str(int(random.random()*10000000)) + 'X',
             'email': 'microserivce_userName' + str(i) + "@163.com"
         }
-        print("%d 's people is registered", i)
         q = requests.post(url_createUser, json=user_data, headers=heads)
         q_data = json.loads(q.text)
         if json.loads(q.text)['status'] == 1:

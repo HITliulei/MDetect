@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author Lei
@@ -45,8 +46,6 @@ public class ServiceController {
     }
 
 
-
-
     @PostMapping("/pushServiceInfo")
     public MResponse pushServiceInfo(@RequestBody MResponse<List<MService>> mResponse){
         List<MService> serviceList = mResponse.getData();
@@ -76,6 +75,14 @@ public class ServiceController {
         // 存储数据库
         return MResponse.successResponse();
 
+    }
+
+
+
+    @GetMapping("getALlREgisterSevice")
+    public MResponse<List<String>> getALlServiceVersionInfo(){
+        List<MService> list =  mDatabaseUtils.getAllServices();
+        return new MResponse<List<String>>().data(list.stream().map(a -> a.getServiceId()).collect(Collectors.toList()));
     }
 
 

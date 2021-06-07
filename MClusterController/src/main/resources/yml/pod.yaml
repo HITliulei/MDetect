@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: NULL                              # instance Id
+  # namespace: kube-test
   labels:
     app: NULL                             # service Name微服务名称
 spec:
