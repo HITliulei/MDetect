@@ -9,14 +9,17 @@ import com.ll.centralcontrol.mapper.ServicesMapper;
 import com.ll.common.service.MParamer;
 import com.ll.common.service.MService;
 import com.ll.common.service.MSvcInterface;
+import com.ll.common.utils.MResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.support.TransactionTemplate;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author Lei
@@ -122,6 +125,11 @@ public class MDatabaseUtils {
     public MService getMServiceById(String serviceId){
         return getServiceByDao(databaseUtils.servicesMapper.getById(serviceId));
 
+    }
+
+    public Set<String> getALlServiceVersionInfo(){
+        List<MService> list =  mDatabaseUtils.getAllServices();
+        return list.stream().map(a -> a.getServiceId()).collect(Collectors.toSet());
     }
 
 }

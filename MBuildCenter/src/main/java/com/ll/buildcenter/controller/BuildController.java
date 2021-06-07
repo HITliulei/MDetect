@@ -60,7 +60,7 @@ public class BuildController {
         return ifpush?MResponse.failedResponse().code(0).status("failed"):MResponse.successResponse().code(1).data(string+ " " + " push success");
     }
 
-    @GetMapping("complie")
+    @GetMapping("compile")
     public MResponse complieProject(){
         return new MResponse().status(buildServiceImage.compile()?"build success":"build failed");
     }

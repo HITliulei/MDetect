@@ -1,11 +1,13 @@
 package com.ll.centralcontrol.controller;
 
+import com.ll.centralcontrol.client.BuilderCenterClient;
 import com.ll.centralcontrol.client.ServiceAnalysisClient;
 import com.ll.centralcontrol.utils.MDatabaseUtils;
 import com.ll.common.bean.MServiceRegisterBean;
 import com.ll.common.bean.MSystemInfo;
 import com.ll.common.service.MService;
 import com.ll.common.service.MSvcInterface;
+import com.ll.common.service.MSvcVersion;
 import com.ll.common.utils.MIDUtils;
 import com.ll.common.utils.MResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,10 @@ public class ServiceController {
 
 
     @Autowired
+    private BuilderCenterClient builderCenterClient;
+
+
+    @Autowired
     private MDatabaseUtils mDatabaseUtils;
 
     @PostMapping(value = "/registerOnservice")
@@ -40,6 +46,7 @@ public class ServiceController {
     }
 
 
+    // 对所有的微服务进行相应的检测
     @PostMapping(value = "/register")
     public MResponse registerService(@RequestBody MSystemInfo mSystemInfo) {
         return serviceAnalysisClient.getSystemInfo(mSystemInfo);
@@ -62,29 +69,24 @@ public class ServiceController {
                 allServiceId.add(a.getServiceId());
             }
         }
-
-
+        // 信息存储
+        builderCenterClient.complieProject();
+        Set<String> exitService = mDatabaseUtils.getALlServiceVersionInfo();
         for (MService service : serviceList) {
             for (MSvcInterface serviceInterface : service.getServiceInterfaceMap().values()) {
 //                serviceInterface.setId(MIDUtils.uniqueInterfaceId(service.getServiceName(), serviceInterface.getFunctionName()));
                 serviceInterface.setServiceId(service.getId());
             }
-
-            mDatabaseUtils.insertService(service);
+            // 对于每一个serivce进行 docker 镜像的构建和存储
+            if (exitService.contains(service.getServiceId())){
+                continue;
+            }else{
+                // 镜像的构建以及 数据库的存储
+                builderCenterClient.buildProject(service.getServiceName(), service.getServiceVersion().toString());
+                service.setImageUrl(service.getServiceName().toLowerCase() + ":" + service.getServiceVersion().toCommonStr());
+                mDatabaseUtils.insertService(service);
+            }
         }
-        // 存储数据库
         return MResponse.successResponse();
-
     }
-
-
-
-    @GetMapping("getALlREgisterSevice")
-    public MResponse<List<String>> getALlServiceVersionInfo(){
-        List<MService> list =  mDatabaseUtils.getAllServices();
-        return new MResponse<List<String>>().data(list.stream().map(a -> a.getServiceId()).collect(Collectors.toList()));
-    }
-
-
-
 }

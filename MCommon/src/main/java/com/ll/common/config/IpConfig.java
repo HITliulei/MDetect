@@ -20,4 +20,10 @@ public class IpConfig {
     public final static String MMONITOR = "127.0.0.1";
     public final static Integer MMONITOR_PORT = 181803;
 
+
+    // 构建中心的Ip地址
+    public final static String MBUILD_CENTER_IP = "127.0.0.1";
+    public final static Integer MBUILD_CENTER_PORT = 18088;
+
+
 }
