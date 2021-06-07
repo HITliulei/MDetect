@@ -34,10 +34,8 @@ public class XmlTemplate {
                 "        }\n" +
                 "        stage('docker push'){\n" +
                 "            steps{\n" +
-                "                sh \"docker login --username=micheallei --password=1119016521ll.\"\n" +
                 "                sh \"docker tag \"+registry+\":\"+tag+\" micheallei/\"+registry+\":\"+tag\n" +
                 "                sh \"docker push micheallei/\"+registry+\":\"+tag\n" +
-                "                sh \"docker logout\"\n" +
                 "                sh \"docker rmi \"+registry+\":\"+tag\n" +
                 "                sh \"docker rmi micheallei/\"+registry+\":\"+tag\n" +
                 "            }\n" +

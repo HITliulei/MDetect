@@ -15,9 +15,8 @@ import lombok.ToString;
 @Setter
 @ToString
 public class MBuildJobBean {
-    private String id;
     private String serviceName;
     private String gitUrl;
-    private String gitTag;
+    private String serviceVersion;
 
 }
