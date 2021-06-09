@@ -40,5 +40,5 @@ spec:
         - name: tmp-dir
           mountPath: /tmp
       nodeSelector:
-        node: worker1
+        node: k8s-master
 

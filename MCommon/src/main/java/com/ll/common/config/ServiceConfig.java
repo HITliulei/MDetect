@@ -1,5 +1,7 @@
 package com.ll.common.config;
 
+import com.ll.common.bean.system.MSystemInfo;
+
 /**
  * @author Lei
  * @version 0.1
@@ -9,6 +11,9 @@ public class ServiceConfig {
 
     // 源代码下载路径
     public final static String CODE_DIWNLOAD_PATH  = "/tmp/MServiceAnalyzer";
+
+
+    public final static MSystemInfo MSYSTEM_INFO = new MSystemInfo();
 
 
     public static String[] serviceList = new String[]{
