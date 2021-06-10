@@ -22,8 +22,6 @@ import java.util.concurrent.Executors;
  * @version 0.1
  * @date 2021/6/6
  */
-
-
 @RequestMapping("buildCenter")
 public class BuildController {
 
@@ -59,6 +57,7 @@ public class BuildController {
         boolean ifpush = buildServiceImage.pushImage(serviceImageName);
         return ifpush?MResponse.failedResponse().code(0).status("failed"):MResponse.successResponse().code(1).data(string+ " " + " push success");
     }
+
 
     @GetMapping("compile")
     public MResponse complieProject(){

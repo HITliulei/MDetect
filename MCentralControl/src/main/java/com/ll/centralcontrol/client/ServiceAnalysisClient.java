@@ -27,8 +27,6 @@ public class ServiceAnalysisClient {
     @Autowired
     private RestTemplate restTemplate;
 
-
-
     public MResponse getServiceInfo(MServiceRegisterBean mServiceRegisterBean){
         return restTemplate.exchange(
                 MURIUtils.getRemoteUri(IpConfig.SERVICE_ANALSIS_IP, IpConfig.SERVICE_ANALSIS_PORT, "/serviceAnalysis/getFudanInfoOfOneService"),

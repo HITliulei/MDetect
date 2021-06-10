@@ -128,7 +128,7 @@ public class MDatabaseUtils {
     }
 
     public Set<String> getALlServiceVersionInfo(){
-        List<MService> list =  mDatabaseUtils.getAllServices();
+        List<MService> list =  databaseUtils.getAllServices();
         return list.stream().map(a -> a.getServiceId()).collect(Collectors.toSet());
     }
 

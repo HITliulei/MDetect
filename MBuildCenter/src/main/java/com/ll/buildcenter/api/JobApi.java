@@ -29,7 +29,7 @@ public class JobApi {
         String projectName = gits[gits.length-1].split("\\.")[0];
         JenkinsServer jenkinsServer = JenkinsConnect.connection();
         try {
-            String xml = XmlTemplate.getXml(mBuildJobBean.getServiceName(), mBuildJobBean.getGitTag(), projectName, mBuildJobBean.getGitUrl());
+            String xml = XmlTemplate.getXml(mBuildJobBean.getServiceName(), mBuildJobBean.getServiceVersion(), projectName, mBuildJobBean.getGitUrl());
             System.out.println(xml);
 
             if(jenkinsServer.getJobs().keySet().contains(jobName)){

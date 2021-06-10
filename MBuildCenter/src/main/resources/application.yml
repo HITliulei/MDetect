@@ -7,11 +7,11 @@ spring:
     name: mbuildcenter
 
 
-jenkins:
+jenkins:  # jenkins的ip地址
   ip: "192.168.0.107"
   port: 8079
 
 docker:
-  registry:
+  registry:  # docker 私有的镜像仓库
     ip: "192.168.0.107"
     port: 5000
