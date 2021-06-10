@@ -1,13 +1,8 @@
 package com.ll.common.bean.system;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * @author Lei
@@ -16,15 +11,18 @@ import java.util.Set;
  */
 
 @Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
 public class MServiceInfo {
-    private String serviceName;
+    private final String serviceName;
 
-    private Integer servicePort;
+    private final Integer servicePort;
 
-    private String serviceIp;
+    private final String serviceIp;
+
+    public MServiceInfo(String serviceName, Integer servicePort, String serviceIp) {
+        this.serviceName = serviceName;
+        this.servicePort = servicePort;
+        this.serviceIp = serviceIp;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -34,8 +32,4 @@ public class MServiceInfo {
         return Objects.equals(serviceName, that.serviceName) && Objects.equals(servicePort, that.servicePort) && Objects.equals(serviceIp, that.serviceIp);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(serviceName, servicePort, serviceIp);
-    }
 }

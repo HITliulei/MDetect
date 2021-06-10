@@ -36,13 +36,13 @@ public class BuildController {
 
     @RequestMapping("/build")
     public MResponse buildJob(@RequestBody MBuildJobBean mBuildJobBean){
-        String jobName = mBuildJobBean.getServiceName()+"_"+mBuildJobBean.getGitTag();
+        String jobName = mBuildJobBean.getServiceName()+"_"+mBuildJobBean.getServiceVersion();
         JobApi.createJob(mBuildJobBean,jobName);
         String result = JobApi.buildJob(jobName);
         if(result.equals("SUCCESS")){
             MBuildJobFinishedBean mBuildJobFinishedBean = new MBuildJobFinishedBean();
             mBuildJobFinishedBean.setId(jobName);
-            mBuildJobFinishedBean.setImageUrl("micheallei/"+mBuildJobBean.getServiceName().toLowerCase()+":"+mBuildJobBean.getGitTag());
+            mBuildJobFinishedBean.setImageUrl("micheallei/"+mBuildJobBean.getServiceName().toLowerCase()+":"+mBuildJobBean.getServiceVersion());
             mBuildJobFinishedBean.setSuccess(true);
             return MResponse.successResponse().data(mBuildJobBean).code(1);
         }else{
