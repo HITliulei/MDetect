@@ -1,5 +1,5 @@
-CREATE DATABASE IF NOT EXISTS `service_evolution`;
-USE  `service_evolution`;
+CREATE DATABASE IF NOT EXISTS `smell_detect`;
+USE  `smell_detect`;
 
 CREATE TABLE `services` (
     `id` varchar(100) NOT NULL COMMENT '服务ID',

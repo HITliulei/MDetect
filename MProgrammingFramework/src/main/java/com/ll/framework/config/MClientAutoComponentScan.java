@@ -23,6 +23,12 @@ public class MClientAutoComponentScan extends WebMvcConfigurationSupport {
     public MCollectDataAop mCollectDataAop(){return new MCollectDataAop();}
 
 
+    @Bean
+    @Qualifier("Mvf4msConfig")
+    public Mvf4msConfig mvf4msConfig(){
+        return new Mvf4msConfig();
+    }
+
     /**
      * 跨域 习惯性跨域
      */

@@ -6,7 +6,7 @@ spring:
     name: MCenterControl
   datasource:
     name: service_evolution
-    url: jdbc:mysql://192.168.1.102:3306/service_evolution
+    url: jdbc:mysql://192.168.1.102:3306/smell_detect
     username: root
     password: ices504
     driver-class-name: com.mysql.jdbc.Driver
