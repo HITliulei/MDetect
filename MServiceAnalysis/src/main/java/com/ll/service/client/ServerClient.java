@@ -28,11 +28,12 @@ public class ServerClient {
     @Autowired
     private RestTemplate restTemplate;
 
-    public MResponse pushServiceInfos(List<MService> list){
-        return restTemplate.exchange(
+    public void pushServiceInfos(List<MService> list, String branch){
+        System.out.println("发送信息");
+        restTemplate.exchange(
                 MURIUtils.getRemoteUri(IpConfig.CENTER_IP, IpConfig.CENTER_PORT, "/centerController/pushServiceInfo"),
                 HttpMethod.POST,
-                new HttpEntity<>(new MResponse<List<MService>>().data(list), new HttpHeaders()),
-                MResponse.class).getBody();
+                new HttpEntity<>(new MResponse<List<MService>>().data(list).code(1), new HttpHeaders()),
+                MResponse.class);
     }
 }

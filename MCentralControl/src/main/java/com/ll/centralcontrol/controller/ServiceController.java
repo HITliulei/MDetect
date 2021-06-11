@@ -10,6 +10,8 @@ import com.ll.common.service.MSvcInterface;
 import com.ll.common.service.MSvcVersion;
 import com.ll.common.utils.MIDUtils;
 import com.ll.common.utils.MResponse;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
@@ -26,6 +28,8 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/centerController")
 public class ServiceController {
+
+    private static Logger logger = LogManager.getLogger(ServiceController.class);
 
     private static Set<String> allServiceId  = new HashSet<String>();
 
@@ -45,7 +49,6 @@ public class ServiceController {
         return serviceAnalysisClient.getServiceInfo(registerBean);
     }
 
-
     // 对所有的微服务进行相应的检测
     @PostMapping(value = "/register")
     public MResponse registerService(@RequestBody MSystemInfo mSystemInfo) {
@@ -53,12 +56,16 @@ public class ServiceController {
     }
 
 
-    @PostMapping("/pushServiceInfo")
-    public MResponse pushServiceInfo(@RequestBody MResponse<List<MService>> mResponse){
+
+
+    @PostMapping("/pushServiceInfo/{branch}")
+    public MResponse pushServiceInfo(@PathVariable("branch")String branch, @RequestBody MResponse<List<MService>> mResponse){
         List<MService> serviceList = mResponse.getData();
         if (serviceList == null || serviceList.size() == 0){
-            return MResponse.successResponse();
+            return MResponse.successResponse().code(1);
         }
+        logger.info("获取所有的微服务信息");
+        serviceList.stream().forEach(System.out::println);
         Iterator<MService> interator = serviceList.iterator();
 
         while (interator.hasNext()){
@@ -70,7 +77,8 @@ public class ServiceController {
             }
         }
         // 信息存储
-        builderCenterClient.complieProject();
+        builderCenterClient.complieProject(branch);
+        logger.info("进行构建");
         Set<String> exitService = mDatabaseUtils.getALlServiceVersionInfo();
         for (MService service : serviceList) {
             for (MSvcInterface serviceInterface : service.getServiceInterfaceMap().values()) {

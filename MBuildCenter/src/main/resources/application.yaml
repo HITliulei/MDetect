@@ -13,5 +13,5 @@ jenkins:  # jenkins的ip地址
 
 docker:
   registry:  # docker 私有的镜像仓库
-    ip: "192.168.0.107"
+    ip: "192.168.0.104"
     port: 5000

@@ -25,9 +25,9 @@ public class BuilderCenterClient {
     private RestTemplate restTemplate;
 
     // complie
-    public MResponse complieProject(){
+    public MResponse complieProject(String branch){
         return restTemplate.exchange(
-                MURIUtils.getRemoteUri(IpConfig.MBUILD_CENTER_IP, IpConfig.MBUILD_CENTER_PORT, "/buildCenter/compile"),
+                MURIUtils.getRemoteUri(IpConfig.MBUILD_CENTER_IP, IpConfig.MBUILD_CENTER_PORT, "/buildCenter/compile/" + branch),
                 HttpMethod.GET,
                 new HttpEntity<>(null, new HttpHeaders()),
                 MResponse.class).getBody();

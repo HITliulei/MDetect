@@ -18,7 +18,7 @@ public class ServiceConfig {
     public static final MSystemAllInfo M_SYSTEM_ALL_INFO = new MSystemAllInfo();
 
 
-    public static String[] serviceList = new String[]{
+    public static final String[] SERVICE_LIST = new String[]{
             "ts-voucher-service", "ts-verification-code-service", "ts-travel-service", "ts-travel-plan-service", "ts-travel2-service", "ts-train-service",
             "ts-ticketinfo-service", "ts-ticket-office-service", "ts-station-service", "ts-auth-service", "ts-security-service", "ts-seat-service", "ts-route-service",
             "ts-route-plan-service", "ts-rebook-service", "ts-price-service", "ts-preserve-service", "ts-preserve-other-service",

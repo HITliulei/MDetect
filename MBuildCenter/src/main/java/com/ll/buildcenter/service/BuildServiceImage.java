@@ -12,7 +12,7 @@ public interface BuildServiceImage {
     public String buildServiceImage(String serviceName, String serviceVersion);
 
 
-    public boolean compile();
+    public boolean compile(String branch);
 
     public boolean pushImage(String imagesName);
 

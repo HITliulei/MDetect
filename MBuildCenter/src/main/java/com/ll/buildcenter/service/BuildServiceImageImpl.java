@@ -36,8 +36,8 @@ public class BuildServiceImageImpl implements BuildServiceImage{
     }
 
     @Override
-    public boolean compile() {
-        String localPath = ServiceConfig.TRACEINFO_PATH + File.separator + allname;
+    public boolean compile(String branch) {
+        String localPath = ServiceConfig.TRACEINFO_PATH + File.separator + allname+"_" + branch;
         String sh = "cd " +localPath + " ; mvn clean package -Dmaven.test.skip=true";
         return MShellUtils.onlyRunShell(sh);
     }

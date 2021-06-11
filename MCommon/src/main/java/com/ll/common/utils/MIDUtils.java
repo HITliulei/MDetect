@@ -1,6 +1,6 @@
 package com.ll.common.utils;
 
-import org.apache.commons.lang3.RandomStringUtils;
+//import org.apache.commons.lang3.RandomStringUtils;
 
 /**
  * @author Lei
@@ -18,9 +18,9 @@ public class MIDUtils {
     private final static String USER_ID_PREFIX = "USER";
 
 
-    public static String uniqueInterfaceId(String serviceName, String interfaceName) {
-        return String.format("%s_%s_%s", serviceName, interfaceName, RandomStringUtils.randomAlphanumeric(6));
-    }
+//    public static String uniqueInterfaceId(String serviceName, String interfaceName) {
+//        return String.format("%s_%s_%s", serviceName, interfaceName, RandomStringUtils.randomAlphanumeric(6));
+//    }
 
     public static synchronized String uniqueInstanceId(String serviceName, String version) {
         long currTimeMills = System.currentTimeMillis();

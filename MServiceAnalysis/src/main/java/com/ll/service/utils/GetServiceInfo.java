@@ -26,9 +26,11 @@ public class GetServiceInfo {
     private static Logger logger = LogManager.getLogger(GetSourceCode.class);
 
     public static MService getMservice(MPathInfo pathInfo) {
+        logger.info("开始获取服务信息");
         MService mService = getConfig(pathInfo.getApplicationPath());
         mService.setServiceName(mService.getServiceName().toLowerCase());
         mService.setServiceId(mService.getServiceName() + "_" + mService.getServiceVersion().toCommonStr());
+        logger.info("获取的服务配置信息为" + mService.toString());
         Map<String, MSvcInterface> map = new HashMap<>();
         for (String s : pathInfo.getControllerListPath()) {
             map.putAll(getServiceInfo(mService.getServiceId(),s,mService.getBasePath()));
@@ -36,6 +38,8 @@ public class GetServiceInfo {
         mService.setServiceInterfaceMap(map);
         return mService;
     }
+
+
 
     public static MService getConfig(String path) {
         String[] paths = path.split("\\.");
@@ -114,6 +118,7 @@ public class GetServiceInfo {
      * @return Service类，返回该类的信息
      */
     public static Map<String, MSvcInterface> getServiceInfo(String serviceId, String codepath, String contextPath) {
+        logger.info("获取接口");
         Map<String, MSvcInterface> map = new HashMap<>();
         CompilationUnit compilationUnit = null;
         File file;
@@ -135,7 +140,7 @@ public class GetServiceInfo {
 
         String[] strings = codepath.split("/");
         String className = strings[strings.length - 1].split("\\.")[0];
-
+        logger.info("类的名字为" + className);
         Optional<ClassOrInterfaceDeclaration> cOptional = compilationUnit.getClassByName(className);
         if (cOptional.isPresent()) {
             ClassOrInterfaceDeclaration c = cOptional.get();
@@ -148,6 +153,7 @@ public class GetServiceInfo {
             /*得到interface方面*/
             List<MethodDeclaration> methodDeclarationList = c.getMethods();
             // 遍历每一个方法
+            logger.info("遍历每一个方法");
             for (MethodDeclaration m : methodDeclarationList) {
                 MSvcInterface mSvcInterface = new MSvcInterface();
                 mSvcInterface.setFunctionName(m.getName().toString());
@@ -155,24 +161,28 @@ public class GetServiceInfo {
                 List<String> pathurl = new ArrayList<>();
                 NodeList<AnnotationExpr> anno = m.getAnnotations();
                 List<String> pathContextsFunction = new ArrayList<>();
-                for (AnnotationExpr annotationExpr : anno) {
+                for (AnnotationExpr annotationExpr : anno) { // 遍历每一个注释
                     List<Node> childNodes = annotationExpr.getChildNodes();
                     String annoName = childNodes.get(0).toString();
                     if ("RequestMapping".equals(annoName) || "GetMapping".equals(annoName) || "PostMapping".equals(annoName) || "DeleteMapping".equals(annoName) || "PutMapping".equals(annoName)) {
-                        Node s = childNodes.get(1);
-                        List<Node> sUrl = s.getChildNodes();
-                        if (sUrl.size() == 0) {
-                            String h = s.toString();
-                            pathContextsFunction.add(h.substring(1, h.length() - 1));
-                        } else {
-                            Node node1 = sUrl.get(1);
-                            if (node1.getChildNodes().size() == 0) {
-                                String h = node1.toString();
+                        if (childNodes.size() == 1){
+                            pathContextsFunction.add("/");
+                        }else {
+                            Node s = childNodes.get(1);
+                            List<Node> sUrl = s.getChildNodes();
+                            if (sUrl.size() == 0) {
+                                String h = s.toString();
                                 pathContextsFunction.add(h.substring(1, h.length() - 1));
                             } else {
-                                for (Node node : node1.getChildNodes()) {
-                                    String h = node.toString();
+                                Node node1 = sUrl.get(1);
+                                if (node1.getChildNodes().size() == 0) {
+                                    String h = node1.toString();
                                     pathContextsFunction.add(h.substring(1, h.length() - 1));
+                                } else {
+                                    for (Node node : node1.getChildNodes()) {
+                                        String h = node.toString();
+                                        pathContextsFunction.add(h.substring(1, h.length() - 1));
+                                    }
                                 }
                             }
                         }
@@ -205,24 +215,20 @@ public class GetServiceInfo {
                     continue;
                 }
                 /*获取  接口层级的参数*/
-                List<MParamer> paramerList = getParamers(m.getParameters());
+                List<MParamer> paramerList = new ArrayList<>();
+                NodeList<Parameter> parameters = m.getParameters();
+                if (parameters != null && parameters.size()!=0){
+                     paramerList = getParamers(parameters);
+                }
                 mSvcInterface.setParams(paramerList);
-                /* 遍历函数内部寻找 版本依赖的调用方法 */
-//                Optional<BlockStmt> bodyOptional = m.getBody();
-//                if (bodyOptional.isPresent()) {
-//                    List<MDependency> dependences = getDependence(bodyOptional.get());
-//                    mSvcInterface.setMDependencies(dependences);
-//                    for (String string : pathurl) {
-//                        mSvcInterface.setPatternUrl(string);
-//                        map.put(string, mSvcInterface);
-//                    }
-//                }
                 mSvcInterface.setInterfaceId(String.format("%s_%s", serviceId, mSvcInterface.getFunctionName()));
                 for (String patternUrl : pathurl) {
                     mSvcInterface.setPatternUrl(patternUrl);
                     map.put(mSvcInterface.getFunctionName() + mSvcInterface.getPatternUrl() , new MSvcInterface(mSvcInterface));
                 }
             }
+        }else{
+            logger.info("出现问题");
         }
         return map;
     }
@@ -260,12 +266,10 @@ public class GetServiceInfo {
         for (Parameter parameter : parameters) {
             MParamer paramer = new MParamer();
             List<Node> childNodes = parameter.getChildNodes();
-
             // jump over the parameters without annotation
             if (childNodes.size() != 3) {
                 continue;
             }
-
             paramer.setName(childNodes.get(2).toString());
             paramer.setType(childNodes.get(1).toString());
             Node node = childNodes.get(0);
@@ -275,50 +279,33 @@ public class GetServiceInfo {
                 paramer.setMethod(method);
                 paramer.setRequestname("实体类");
                 paramer.setDefaultObject("");
-            } else {
+            } else if("RequestHeader".equals(method)){
                 paramer.setMethod(method);
-                String name = annoInfo.get(1).toString();
-                if (annoInfo.size() == 2) {
-                    String trueName = name.trim().replace("\"", "");
-                    paramer.setRequestname(trueName);
+                paramer.setRequestname("请求头部");
+                paramer.setDefaultObject("");
+            }
+            else {
+                paramer.setMethod(method);
+                if (annoInfo.size() == 1){
+                    paramer.setRequestname(childNodes.get(2).toString());
                     paramer.setDefaultObject("");
-                } else {
-                    String trueName = name.split("=")[1].trim().replace("\"", "");
-                    String defauleValue = annoInfo.get(2).toString().split("=")[1].trim().replace("\"", "");
-                    paramer.setRequestname(trueName);
-                    paramer.setDefaultObject(defauleValue);
+                }else {
+                    String name = annoInfo.get(1).toString();
+                    if (annoInfo.size() == 2) {
+                        String trueName = name.trim().replace("\"", "");
+                        paramer.setRequestname(trueName);
+                        paramer.setDefaultObject("");
+                    } else {
+                        String trueName = name.split("=")[1].trim().replace("\"", "");
+                        String defauleValue = annoInfo.get(2).toString().split("=")[1].trim().replace("\"", "");
+                        paramer.setRequestname(trueName);
+                        paramer.setDefaultObject(defauleValue);
+                    }
                 }
+
             }
             paramerList.add(paramer);
         }
         return paramerList;
     }
-
-
-//    public static List<MDependency> getDependence(BlockStmt blockStmt){
-//        List<Node> nodes = blockStmt.getChildNodes();
-//        List<MDependency> dependences = new ArrayList<>();
-//        for (Node node : nodes) {
-//            String string = node.toString();
-//            if (string.contains("mSendRequest.sendRequest")) {
-//                MDependency mDependency = new MDependency();
-//                String[] s = string.substring(string.indexOf("mSendRequest.sendRequest(") + 25, string.indexOf(");")).split(",");
-//                String version = s[1].trim().replace("\"", "");
-//                MSvcVersion mSvcVersion = new MSvcVersion();
-//                String[] versions = version.split("\\.");
-//                mSvcVersion.setMainVersionNum(Integer.parseInt(versions[0]));
-//                mSvcVersion.setChildVersionNum(Integer.parseInt(versions[1]));
-//                mSvcVersion.setFixVersionNum(Integer.parseInt(versions[2]));
-//                String requst = s[0].trim().replace("\"", "");
-//                String requestService = requst.split("/")[3];
-//                List<MSvcVersion> list = new ArrayList<>();
-//                list.add(mSvcVersion);
-//                mDependency.setServiceName(requestService);
-//                mDependency.setPatternUrl(requst);
-//                mDependency.setVersions(list);
-//                dependences.add(mDependency);
-//            }
-//        }
-//        return dependences;
-//    }
 }

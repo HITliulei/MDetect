@@ -17,7 +17,7 @@ CREATE TABLE `interfaces` (
     `functionName` varchar(100) NOT NULL COMMENT '函数名称',
     `requestMethod` varchar(100) NOT NULL COMMENT '请求类型',
     `returnType` varchar(10) NOT NULL COMMENT '返回值类型',
-    `serviceId` varchar(100)
+    `serviceId` varchar(100),
     PRIMARY KEY (`id`),
     FOREIGN KEY(`serviceId`) REFERENCES `services`(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

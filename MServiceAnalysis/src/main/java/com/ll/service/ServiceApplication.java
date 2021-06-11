@@ -16,7 +16,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  */
 
 @SpringBootApplication
-@MClient
 public class ServiceApplication extends WebMvcConfigurerAdapter {
 
 
