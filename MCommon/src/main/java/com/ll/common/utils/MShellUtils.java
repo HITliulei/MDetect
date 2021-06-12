@@ -54,6 +54,10 @@ public class MShellUtils {
             ioException.printStackTrace();
             return false;
         }
+    }
+
+
+    public static void main(String[] args) {
 
     }
 }

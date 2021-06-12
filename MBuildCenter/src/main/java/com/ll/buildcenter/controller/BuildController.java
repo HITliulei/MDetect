@@ -21,11 +21,18 @@ import java.util.concurrent.Executors;
  * @version 0.1
  * @date 2021/6/6
  */
+
+@RestController
 @RequestMapping("buildCenter")
 public class BuildController {
 
 
     private static Logger logger = LogManager.getLogger(BuildController.class);
+
+    @GetMapping("hello")
+    public String welcome(){
+        return "hello mbuildcenter";
+    }
 
 
     @Autowired
@@ -57,14 +64,15 @@ public class BuildController {
         logger.info("构建镜像仓库");
         String string = buildServiceImage.buildServiceImage(mBuildInfo.getServiceName(), mBuildInfo.getServiceVersion());
         String serviceImageName = mBuildInfo.getServiceName().toLowerCase() + ":" + MSvcVersion.fromStr(mBuildInfo.getServiceVersion()).toCommonStr();
-        boolean ifpush = buildServiceImage.pushImage(serviceImageName);
-        return ifpush?MResponse.failedResponse().code(0).status("failed"):MResponse.successResponse().code(1).data(string+ " " + " push success");
+//        boolean ifpush = buildServiceImage.pushImage(serviceImageName);
+        return string==null?MResponse.failedResponse().code(0).status("failed"):MResponse.successResponse().code(1).data(string+ " " + " push success");
     }
 
-
     @GetMapping("compile/{branch}")
-    public MResponse complieProject(@PathVariable String branch){
+    public MResponse complieProject(@PathVariable("branch") String branch){
         logger.info("对整个的项目进行编译");
-        return new MResponse().status(buildServiceImage.compile(branch)?"build success":"build failed");
+        String string = buildServiceImage.compile(branch)?"build success":"build failed";
+        logger.info("编译完成");
+        return new MResponse().status(string);
     }
 }

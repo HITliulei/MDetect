@@ -49,14 +49,12 @@ public class ServiceController {
         return serviceAnalysisClient.getServiceInfo(registerBean);
     }
 
+
     // 对所有的微服务进行相应的检测
     @PostMapping(value = "/register")
     public MResponse registerService(@RequestBody MSystemInfo mSystemInfo) {
         return serviceAnalysisClient.getSystemInfo(mSystemInfo);
     }
-
-
-
 
     @PostMapping("/pushServiceInfo/{branch}")
     public MResponse pushServiceInfo(@PathVariable("branch")String branch, @RequestBody MResponse<List<MService>> mResponse){
@@ -77,6 +75,7 @@ public class ServiceController {
             }
         }
         // 信息存储
+        // 构建项目
         builderCenterClient.complieProject(branch);
         logger.info("进行构建");
         Set<String> exitService = mDatabaseUtils.getALlServiceVersionInfo();

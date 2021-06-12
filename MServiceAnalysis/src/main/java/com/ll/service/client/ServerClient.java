@@ -31,7 +31,7 @@ public class ServerClient {
     public void pushServiceInfos(List<MService> list, String branch){
         System.out.println("发送信息");
         restTemplate.exchange(
-                MURIUtils.getRemoteUri(IpConfig.CENTER_IP, IpConfig.CENTER_PORT, "/centerController/pushServiceInfo"),
+                MURIUtils.getRemoteUri(IpConfig.CENTER_IP, IpConfig.CENTER_PORT, "/centerController/pushServiceInfo/" + branch),
                 HttpMethod.POST,
                 new HttpEntity<>(new MResponse<List<MService>>().data(list).code(1), new HttpHeaders()),
                 MResponse.class);
