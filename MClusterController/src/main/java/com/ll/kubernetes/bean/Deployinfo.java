@@ -20,6 +20,9 @@ public class Deployinfo {
     // service Name to deploy
     private String serviceName;
 
+    // service Version
+    private String serviceVersion;
+
     private Integer port;
 
     // String: worker name

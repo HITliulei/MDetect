@@ -1,4 +1,4 @@
-package com.ll.kubernetes.bean.datacollect;
+package com.ll.common.bean.deployInfoCollect;
 
 import com.alibaba.fastjson.JSONObject;
 import lombok.Getter;
@@ -17,10 +17,16 @@ import java.util.Map;
 @Setter
 public class ResultDeploy {
 
+    // 服务名称
     private String serviceName;
 
+    // 服务的版本
+    private String serviceVersion;
+
+    //服务的端口号
     private Integer port;
 
+    // 服务的部署结构
     private Map<String, List<PodInfo>> map;
 
 

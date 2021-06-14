@@ -1,4 +1,4 @@
-package com.ll.kubernetes.bean.datacollect;
+package com.ll.common.bean.deployInfoCollect;
 
 import com.alibaba.fastjson.JSONObject;
 import lombok.*;

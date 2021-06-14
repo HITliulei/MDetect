@@ -19,14 +19,13 @@ import java.util.List;
 public class Utils {
     private static Logger log = LogManager.getLogger(Utils.class);
 
-
 //    private static String path = "/home/liulei/yaml";
+
     private static String path = "/home/ubuntu/yaml";
+
     private static String path1 = "src/yaml";
 
     private static String path_givecommand = "/home/liulei/SmellEx/RUNEX";
-
-
 
     public static V1Pod readPodYaml(String serviceName) {
         V1Pod pod = null;

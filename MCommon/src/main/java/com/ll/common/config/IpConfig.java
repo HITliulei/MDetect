@@ -29,4 +29,9 @@ public class IpConfig {
     public final static Integer MBUILD_CENTER_PORT = 18088;
 
 
+    //Deployment组建
+    public final static String MDEPLOYMENT_IP = "127.0.0.1";
+    public final static Integer MDEPLOYMENT_PORT = 32001;
+
+
 }

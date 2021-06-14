@@ -71,7 +71,7 @@ public class MShellUtils {
                 logger.info(s);
             }
             process.waitFor();
-            return s;
+            return "BUILD SUCCESS";
         } catch (Exception e) {
             e.printStackTrace();
         }

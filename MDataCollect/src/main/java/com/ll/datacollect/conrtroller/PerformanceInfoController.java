@@ -1,6 +1,7 @@
 package com.ll.datacollect.conrtroller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author Lei
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 
 @RequestMapping("getPerformance")
+@RestController
 public class PerformanceInfoController {
 
 

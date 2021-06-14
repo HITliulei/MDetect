@@ -1,14 +1,15 @@
 package com.ll.kubernetes.utils;
 
 
+import com.ll.common.service.MSvcVersion;
 import com.ll.common.utils.MResponse;
 import com.ll.kubernetes.bean.Deployinfo;
 import com.ll.kubernetes.bean.MDockerInfoBean;
 import com.ll.kubernetes.bean.MPodDockerInfo;
 import com.ll.kubernetes.bean.Node.Node;
 import com.ll.kubernetes.bean.Node.NodeList;
-import com.ll.kubernetes.bean.datacollect.PodInfo;
-import com.ll.kubernetes.bean.datacollect.ResultDeploy;
+import com.ll.common.bean.deployInfoCollect.PodInfo;
+import com.ll.common.bean.deployInfoCollect.ResultDeploy;
 import io.kubernetes.client.ApiClient;
 import io.kubernetes.client.ApiException;
 import io.kubernetes.client.Configuration;
@@ -397,8 +398,14 @@ public class K8sutils {
             return null;
         }
         String serviceName = deployinfo.getServiceName();
+        String serviceVersion = MSvcVersion.fromStr(deployinfo.getServiceVersion()).toCommonStr();
+        String serviceId = serviceName + "_" + serviceVersion;
+        String serviceImageUrl = ip+"/"+serviceName + ":" + serviceVersion;
+
         resultDeploy.setServiceName(serviceName);
+        resultDeploy.setServiceVersion(serviceVersion);
         resultDeploy.setPort(deployinfo.getPort());
+
         Map<String, List<PodInfo>> map = new HashMap<>();
         Map<String, Integer> deploy = deployinfo.getMap();
         int sum = 0;
@@ -410,12 +417,12 @@ public class K8sutils {
                 for (int i=0;i<deploy.get(nodeLabel);i++){
                     PodInfo podInfo = new PodInfo();
                     String uuid = UUID.randomUUID().toString().substring(24);
-                    String metadata = serviceName + "-" + uuid;
+                    String metadata = serviceId + "-" + uuid;
                     podInfo.setPodName(metadata);
                     v1Pod.getMetadata().setName(metadata);
                     v1Pod.getMetadata().getLabels().put("app", serviceName);
                     v1Pod.getSpec().getContainers().get(0).setName(serviceName);
-                    v1Pod.getSpec().getContainers().get(0).setImage(ip+"/"+baseName+"_"+serviceName);
+                    v1Pod.getSpec().getContainers().get(0).setImage(ip+ "/" + baseName + "_" + serviceName);
                     v1Pod.getSpec().getContainers().get(0).getPorts().get(0).setContainerPort(deployinfo.getPort());
                     v1Pod.getSpec().getNodeSelector().put("node", nodeLabel);
                     v1Pod.getSpec().getContainers().get(0).getReadinessProbe().getTcpSocket().setPort(new IntOrString(deployinfo.getPort()));
@@ -442,10 +449,10 @@ public class K8sutils {
         return resultDeploy;
     }
 
-    public boolean onlydeployservice(String serviceName, int port){
+    public boolean onlydeployservice(String serviceName, int port, String serviceVersion){
         if (getService(serviceName) == null){
             V1Service v1Service = Utils.readServiceYaml("service");
-            v1Service.getMetadata().setName(serviceName);
+            v1Service.getMetadata().setName(serviceName + "_" + MSvcVersion.fromStr(serviceVersion).toCommonStr());
             v1Service.getSpec().getSelector().put("app", serviceName);
             v1Service.getSpec().setType("ClusterIP");
             v1Service.getSpec().getPorts().get(0).setName("http");
@@ -582,6 +589,7 @@ public class K8sutils {
         resultDeploy.setMap(map);
         return resultDeploy;
     }
+
 
 
     public ResultDeploy deployGive(String name, int times){

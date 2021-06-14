@@ -5,7 +5,7 @@ import com.ll.kubernetes.bean.Deployinfo;
 import com.ll.kubernetes.bean.MDockerInfoBean;
 import com.ll.kubernetes.bean.MPodDockerInfo;
 import com.ll.kubernetes.bean.Node.NodeList;
-import com.ll.kubernetes.bean.datacollect.ResultDeploy;
+import com.ll.common.bean.deployInfoCollect.ResultDeploy;
 import com.ll.kubernetes.utils.K8sutils;
 import io.kubernetes.client.models.V1Pod;
 import io.kubernetes.client.models.V1Service;
@@ -76,11 +76,14 @@ public class k8scontrol {
         return this.k8sutils.getAllPodDockerInfo();
     }
 
+
     @GetMapping("/getAllpodsName")
     public MResponse<List<String>> getAllpodsName(){
         log.info("得到所有的podName");
         return this.k8sutils.getAllpodsName();
     }
+
+
     /**
      * 得到所有的mongo pod信息
      */
@@ -158,9 +161,9 @@ public class k8scontrol {
     }
 
     @GetMapping("/onlydeployservice")
-    public boolean onlydeployService(@RequestParam("serviceName") String serviceName, @RequestParam("port")int port){
+    public boolean onlydeployService(@RequestParam("serviceName") String serviceName, @RequestParam("port")int port, @RequestParam("serviceVersion") String serviceVersion){
         log.info("deploy service: " + serviceName);
-        return this.k8sutils.onlydeployservice(serviceName, port);
+        return this.k8sutils.onlydeployservice(serviceName, port, serviceVersion);
     }
 
     /**

@@ -83,11 +83,11 @@ public class MDatabaseUtils {
         TransactionTemplate transactionTemplate = new TransactionTemplate(databaseUtils.transactionManager);
         transactionTemplate.execute(txStatus -> {
             for (MSvcInterface serviceInterface : service.getServiceInterfaceMap().values()) {
-                databaseUtils.paramsMapper.deleteByInterfaceId(serviceInterface.getId());
+                databaseUtils.paramsMapper.deleteByInterfaceId(serviceInterface.getInterfaceId());
             }
-            databaseUtils.interfacesMapper.deleteByServiceId(service.getId());
+            databaseUtils.interfacesMapper.deleteByServiceId(service.getServiceId());
 
-            databaseUtils.servicesMapper.deleteById(service.getId());
+            databaseUtils.servicesMapper.deleteById(service.getServiceId());
             return null;
         });
     }
