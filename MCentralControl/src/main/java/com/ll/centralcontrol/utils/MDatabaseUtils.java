@@ -63,10 +63,11 @@ public class MDatabaseUtils {
             databaseUtils.servicesMapper.insert(serviceDao);
             for (MSvcInterface serviceInterface : service.getServiceInterfaceMap().values()) {
                 MInterfaceDao interfaceDao = MInterfaceDao.fromDto(serviceInterface);
+                interfaceDao.setId(serviceInterface.getInterfaceId());
                 databaseUtils.interfacesMapper.insert(interfaceDao);
                 for (int i = 0; i < serviceInterface.getParams().size(); ++i) {
                     MParamDao paramDao = MParamDao.fromDto(
-                            serviceInterface.getId(),
+                            serviceInterface.getInterfaceId(),
                             serviceInterface.getParams().get(i),
                             i
                     );

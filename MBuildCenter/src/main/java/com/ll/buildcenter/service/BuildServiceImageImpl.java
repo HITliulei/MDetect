@@ -28,18 +28,18 @@ public class BuildServiceImageImpl implements BuildServiceImage{
     private static String allname = "train-ticket";
 
     @Override
-    public String buildServiceImage(String serviceName, String serviceVersion) {
+    public String buildServiceImage(String branch, String serviceName, String serviceVersion) {
         String serviceImage = serviceName.toLowerCase() + ":" + MSvcVersion.fromStr(serviceVersion).toCommonStr();
-        String localPath = ServiceConfig.TRACEINFO_PATH + File.separator + allname + File.separator + serviceName.toLowerCase();
-        String strSh = new StringBuilder("cd ").append(localPath).append(" ; ").append("docker build -t ").append(serviceImage).append(" .").toString();
-        return MShellUtils.runShellWithOne(strSh);
+        String localPath = ServiceConfig.CODE_DIWNLOAD_PATH + File.separator + allname+"_"+branch + File.separator + serviceName.toLowerCase();
+        String strSh = new StringBuilder("docker build -t ").append(serviceImage).append(" .").toString();
+        return MShellUtils.runShellWithOne(strSh, new File(localPath));
     }
 
     @Override
     public boolean compile(String branch) {
-        String localPath = ServiceConfig.TRACEINFO_PATH + File.separator + allname+"_" + branch;
-        String sh = "cd " +localPath + " ; mvn clean package -Dmaven.test.skip=true";
-        return MShellUtils.onlyRunShell(sh);
+        String localPath = ServiceConfig.CODE_DIWNLOAD_PATH + File.separator + allname+"_" + branch + "/";
+        String sh = "mvn clean package -Dmaven.test.skip=true";
+        return MShellUtils.runShellWithOne(sh, new File(localPath))==null?false:true;
     }
 
     // push
@@ -53,6 +53,6 @@ public class BuildServiceImageImpl implements BuildServiceImage{
         //docker push
         String shStr1 =  new StringBuilder("docker push ").append(dockerRe).toString();
         MShellUtils.onlyRunShell(shStr);
-        return MShellUtils.onlyRunShell(shStr1);
+        return MShellUtils.runShellWithOne(shStr1)==null?false:true;
     }
 }

@@ -6,9 +6,9 @@ import org.apache.ibatis.annotations.*;
 import java.util.List;
 
 /**
- * @author SeptemberHX
+ * @author Lei
  * @version 0.1
- * @date 2019/12/20
+ * @date 2020/12/20
  */
 public interface ServicesMapper {
     @Select("SELECT * FROM services")
@@ -33,8 +33,8 @@ public interface ServicesMapper {
     })
     MServiceDao getById(String serviceId);
 
-    @Insert("INSERT INTO services(id, name, version, image, port, basePath)" +
-            " VALUES(#{serviceId}, #{serviceName}, #{serviceVersion}, #{serviceImage}, #{port}, #{basePath})")
+    @Insert("INSERT INTO services (id, name, version, image, port, basePath)" +
+            " VALUES (#{serviceId}, #{serviceName}, #{serviceVersion}, #{serviceImage}, #{port}, #{basePath})")
     void insert(MServiceDao serviceDao);
 
     @Select("SELECT * FROM services WHERE name = #{serviceName}")

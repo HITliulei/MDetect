@@ -15,6 +15,9 @@ import lombok.*;
 @AllArgsConstructor
 public class MBuildInfo {
 
+    // 分支
+    private String branch;
+
     // 服务的名字
     private String serviceName;
 

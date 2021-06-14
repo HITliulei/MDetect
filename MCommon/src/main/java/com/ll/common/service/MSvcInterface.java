@@ -11,7 +11,7 @@ import java.util.*;
 /**
  * @author ll
  * @version 0.1
- * @date 2019/12/13
+ * @date 2020/12/13
  */
 @Getter
 @Setter
@@ -40,7 +40,8 @@ public class MSvcInterface extends MUniqueObject {
                 Objects.equals(functionName, that.functionName) &&
                 Objects.equals(requestMethod, that.requestMethod) &&
                 Objects.equals(returnType, that.returnType) &&
-                Objects.equals(serviceId, that.serviceId);
+                Objects.equals(serviceId, that.serviceId) &&
+                Objects.equals(interfaceId, that.interfaceId);
     }
 
     public MSvcInterface() {}
@@ -52,6 +53,7 @@ public class MSvcInterface extends MUniqueObject {
         this.params = new ArrayList<>(other.params);
         this.returnType = other.returnType;
         this.serviceId = other.serviceId;
+        this.interfaceId = other.interfaceId;
     }
 
     @Override

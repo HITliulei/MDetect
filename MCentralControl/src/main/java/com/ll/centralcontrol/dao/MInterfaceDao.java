@@ -8,9 +8,9 @@ import lombok.ToString;
 import java.util.Objects;
 
 /**
- * @author SeptemberHX
+ * @author Lei
  * @version 0.1
- * @date 2019/12/28
+ * @date 2020/12/28
  */
 @Getter
 @Setter
@@ -57,7 +57,7 @@ public class MInterfaceDao {
         String featureName = null;
         Integer slaLevel = null;
         return new MInterfaceDao(
-            serviceInterface.getId(),
+            serviceInterface.getInterfaceId(),
             serviceInterface.getPatternUrl(),
             serviceInterface.getFunctionName(),
             serviceInterface.getRequestMethod(),

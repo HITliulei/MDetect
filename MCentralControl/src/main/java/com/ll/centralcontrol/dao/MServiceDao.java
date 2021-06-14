@@ -9,9 +9,9 @@ import lombok.ToString;
 import java.util.Objects;
 
 /**
- * @author SeptemberHX
+ * @author Lei
  * @version 0.1
- * @date 2019/12/20
+ * @date 2020/12/20
  */
 @Getter
 @Setter
@@ -55,7 +55,7 @@ public class MServiceDao {
 
     public static MServiceDao fromDto(MService service) {
         return new MServiceDao(
-                service.getId(),
+                service.getServiceId(),
                 service.getServiceName(),
                 service.getServiceVersion().toString(),
                 service.getImageUrl(),

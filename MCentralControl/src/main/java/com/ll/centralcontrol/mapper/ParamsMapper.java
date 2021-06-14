@@ -6,9 +6,9 @@ import org.apache.ibatis.annotations.*;
 import java.util.List;
 
 /**
- * @author SeptemberHX
+ * @author Lei
  * @version 0.1
- * @date 2019/12/28
+ * @date 2020/12/28
  */
 public interface ParamsMapper {
     @Select("SELECT * FROM params")

@@ -42,16 +42,16 @@ public class GetSystemCodeAndPath {
         String projectName = urls[urls.length - 1].split("\\.")[0];
         String base_path = ServiceConfig.CODE_DIWNLOAD_PATH + "/" + projectName + "_" + branch;
 
-//        GetSourceCode.deleteDir(base_path);
-//        UsernamePasswordCredentialsProvider usernamePasswordCredentialsProvider =new
-//                UsernamePasswordCredentialsProvider("boylei","BoyLei.ll980213");
-//        try {
-//            logger.info("clone source code");
-//            Git git = Git.cloneRepository().
-//                    setURI(gitUrl).
-//                    setBranch(branch).
-//                    setCredentialsProvider(usernamePasswordCredentialsProvider).
-//                    setDirectory(new File(base_path)).call();
+        GetSourceCode.deleteDir(base_path);
+        UsernamePasswordCredentialsProvider usernamePasswordCredentialsProvider =new
+                UsernamePasswordCredentialsProvider("boylei","BoyLei.ll980213");
+        try {
+            logger.info("clone source code");
+            Git git = Git.cloneRepository().
+                    setURI(gitUrl).
+                    setBranch(branch).
+                    setCredentialsProvider(usernamePasswordCredentialsProvider).
+                    setDirectory(new File(base_path)).call();
             for (String serviceName: serviceList){
                 MPathInfo mPathInfo = getMathInfo(serviceName, base_path);
                 if (mPathInfo == null){
@@ -60,11 +60,11 @@ public class GetSystemCodeAndPath {
                 mPathInfo.setServiceName(serviceName);
                 map.put(serviceName, mPathInfo);
             }
-//            git.close();
-//        }catch (GitAPIException e){
-//            logger.info("git clone 出错误");
-//            e.printStackTrace();
-//        }
+            git.close();
+        }catch (GitAPIException e){
+            logger.info("git clone 出错误");
+            e.printStackTrace();
+        }
         return map;
     }
 

@@ -62,7 +62,7 @@ public class BuildController {
     public MResponse buildImage(@RequestBody MBuildInfo mBuildInfo){
         // 这次通过脚本自动构建镜像， 并推送docker镜像到私有的镜像仓库
         logger.info("构建镜像仓库");
-        String string = buildServiceImage.buildServiceImage(mBuildInfo.getServiceName(), mBuildInfo.getServiceVersion());
+        String string = buildServiceImage.buildServiceImage(mBuildInfo.getBranch(),mBuildInfo.getServiceName(), mBuildInfo.getServiceVersion());
         String serviceImageName = mBuildInfo.getServiceName().toLowerCase() + ":" + MSvcVersion.fromStr(mBuildInfo.getServiceVersion()).toCommonStr();
 //        boolean ifpush = buildServiceImage.pushImage(serviceImageName);
         return string==null?MResponse.failedResponse().code(0).status("failed"):MResponse.successResponse().code(1).data(string+ " " + " push success");

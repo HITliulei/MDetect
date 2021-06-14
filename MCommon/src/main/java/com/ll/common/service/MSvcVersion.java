@@ -10,7 +10,7 @@ import java.util.Objects;
 /**
  * @author ll
  * @version 0.1
- * @date 2019/12/13
+ * @date 2020/12/13
  *
  * Use this class to make it easier to change the rules of the version definition
  * Do not try to add setter methods for the variables to avoid bugs

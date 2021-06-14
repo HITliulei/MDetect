@@ -44,6 +44,8 @@ public class ServiceController {
     @Autowired
     private MDatabaseUtils mDatabaseUtils;
 
+
+
     @PostMapping(value = "/registerOnservice")
     public MResponse registerService(@RequestBody MServiceRegisterBean registerBean) {
         return serviceAnalysisClient.getServiceInfo(registerBean);
@@ -82,16 +84,18 @@ public class ServiceController {
         for (MService service : serviceList) {
             for (MSvcInterface serviceInterface : service.getServiceInterfaceMap().values()) {
 //                serviceInterface.setId(MIDUtils.uniqueInterfaceId(service.getServiceName(), serviceInterface.getFunctionName()));
-                serviceInterface.setServiceId(service.getId());
+                serviceInterface.setServiceId(service.getServiceId());
+                serviceInterface.setInterfaceId(serviceInterface.getInterfaceId());
             }
             // 对于每一个serivce进行 docker 镜像的构建和存储
             if (exitService.contains(service.getServiceId())){
                 continue;
             }else{
                 // 镜像的构建以及 数据库的存储
-                builderCenterClient.buildProject(service.getServiceName(), service.getServiceVersion().toString());
+                builderCenterClient.buildProject(branch, service.getServiceName(), service.getServiceVersion().toString());
                 service.setImageUrl(service.getServiceName().toLowerCase() + ":" + service.getServiceVersion().toCommonStr());
                 mDatabaseUtils.insertService(service);
+                exitService.add(service.getServiceId());
             }
         }
         return MResponse.successResponse();

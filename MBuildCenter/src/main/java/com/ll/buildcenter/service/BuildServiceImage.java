@@ -9,7 +9,7 @@ package com.ll.buildcenter.service;
 
 public interface BuildServiceImage {
 
-    public String buildServiceImage(String serviceName, String serviceVersion);
+    public String buildServiceImage(String branch, String serviceName, String serviceVersion);
 
 
     public boolean compile(String branch);

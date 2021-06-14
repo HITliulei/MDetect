@@ -36,12 +36,12 @@ public class BuilderCenterClient {
 
     //build
 
-    public MResponse buildProject(String serviceName, String serviceVersion){
+    public MResponse buildProject(String branch, String serviceName, String serviceVersion){
 
         return restTemplate.exchange(
                 MURIUtils.getRemoteUri(IpConfig.MBUILD_CENTER_IP, IpConfig.MBUILD_CENTER_PORT, "/buildCenter/buildImage"),
                 HttpMethod.POST,
-                new HttpEntity<>(new MBuildInfo(serviceName, serviceVersion), new HttpHeaders()),
+                new HttpEntity<>(new MBuildInfo(branch, serviceName, serviceVersion), new HttpHeaders()),
                 MResponse.class).getBody();
     }
 

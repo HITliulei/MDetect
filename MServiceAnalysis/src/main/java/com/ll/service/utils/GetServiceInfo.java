@@ -18,7 +18,7 @@ import java.io.*;
 import java.util.*;
 
 /**
- * Created by Lei on 2019/11/29 15:45
+ * Created by Lei on 2020/11/29 15:45
  * @author
  */
 public class GetServiceInfo {
@@ -221,7 +221,7 @@ public class GetServiceInfo {
                      paramerList = getParamers(parameters);
                 }
                 mSvcInterface.setParams(paramerList);
-                mSvcInterface.setInterfaceId(String.format("%s_%s", serviceId, mSvcInterface.getFunctionName()));
+                mSvcInterface.setInterfaceId(String.format("%s_%s_%s", serviceId, className,mSvcInterface.getFunctionName()));
                 for (String patternUrl : pathurl) {
                     mSvcInterface.setPatternUrl(patternUrl);
                     map.put(mSvcInterface.getFunctionName() + mSvcInterface.getPatternUrl() , new MSvcInterface(mSvcInterface));
