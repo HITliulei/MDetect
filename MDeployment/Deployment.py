@@ -8,6 +8,7 @@ import time
 ip_master = "172.31.43.94"
 k8s_url = 'http://'+ip_master+':18082/api/v1/controlk8s'
 
+
 class Service:
     def __init__(self, serviceName, port):
         self.serviceName = serviceName
