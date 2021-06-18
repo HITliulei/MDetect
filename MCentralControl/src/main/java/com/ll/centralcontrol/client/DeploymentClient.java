@@ -29,7 +29,7 @@ public class DeploymentClient {
         headers.set("name", name);
         headers.set("times", times);
         restTemplate.exchange(
-                MURIUtils.getRemoteUri(IpConfig.MDEPLOYMENT_IP, IpConfig.MDEPLOYMENT_PORT, "/deploy"),
+                MURIUtils.getRemoteUri(IpConfig.MDEPLOYMENT_IP, IpConfig.MDEPLOYMENT_PORT, "/Deployment"),
                 HttpMethod.GET,
                 new HttpEntity<>(null, headers),
                 Void.class

@@ -249,10 +249,10 @@ def make_app():
     ])
 
 if __name__ == '__main__':
-    # TailerTest()创建成功创建成功
-    # app = make_app()
-    # app.listen(18000)
-    # tornado.ioloop.IOLoop.current().start()
-    createTravelInfo()
-    print(travel_data)
-    print(len(travel_data))
+#     TailerTest()创建成功创建成功
+    app = make_app()
+    app.listen(18000)
+    tornado.ioloop.IOLoop.current().start()
+#     createTravelInfo()
+#     print(travel_data)
+#     print(len(travel_data))

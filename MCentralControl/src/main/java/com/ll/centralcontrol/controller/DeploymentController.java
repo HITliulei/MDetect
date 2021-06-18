@@ -24,6 +24,7 @@ public class DeploymentController {
 
     @GetMapping("/delpoyment")
     public MResponse deployment(@RequestParam("name") String name, @RequestParam("times") String times){
+        deploymentClient.deployment(name, times);
         return MResponse.successResponse();
     }
 }

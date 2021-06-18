@@ -70,7 +70,6 @@ class Tailerlisten extends TailerListenerAdapter {
     public void handle(String line) {
         logger.info("写入文件 ： " + line);
         //发送到logstash
-
     }
     @Override
     public void handle(Exception ex) {
