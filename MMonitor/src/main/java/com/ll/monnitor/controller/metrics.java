@@ -43,7 +43,7 @@ public class metrics {
         return timeMemAndCpu;
     }
 
-    @GetMapping("topPod/{podname}")
+    @GetMapping("topPod/{podname}") // 默认是default的命名空间
     public TimeMemAndCpu getPodBypodNameDefault(@PathVariable("podname") String podname){
         TimeMemAndCpu timeMemAndCpu = new TimeMemAndCpu();
         timeMemAndCpu.setDate(new Date());
@@ -52,6 +52,7 @@ public class metrics {
     }
 
 
+    // 某个命名空间下的所有pod
     @GetMapping("topPods/{namespace}")
     public TimeMemAndCpu getPodsByNameSpace(@PathVariable("namespace") String namespace){
         TimeMemAndCpu timeMemAndCpu = new TimeMemAndCpu();
@@ -60,6 +61,7 @@ public class metrics {
         return timeMemAndCpu;
     }
 
+    // 默认的所有pod信息
     @GetMapping("topPods")
     public TimeMemAndCpu getPodsByNameSpacedefault(){
         TimeMemAndCpu timeMemAndCpu = new TimeMemAndCpu();

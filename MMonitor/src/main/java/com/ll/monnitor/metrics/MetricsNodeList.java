@@ -11,12 +11,6 @@ import java.util.List;
  * @version 0.1
  * @date 2020/11/29
  */
-
-/**
- *
- * @author suozq
- *
- */
 @ToString
 public class MetricsNodeList {
 

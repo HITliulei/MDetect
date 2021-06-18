@@ -12,12 +12,6 @@ import java.util.Map;
  * @version 0.1
  * @date 2020/11/29
  */
-
-/**
- *
- * @author suozq
- *
- */
 public class MetricsServerApi {
 
     private ApiClient localVarApiClient;
