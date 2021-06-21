@@ -25,6 +25,7 @@ public class MService extends MUniqueObject {
     private String serviceId;  //  "由serviceName_serviceVersion组成"
     private String serviceName;
     private MSvcVersion serviceVersion;
+    private String branch; //branch == null?tag:branch;
     private int port;
     private String imageUrl;
     private String basePath;

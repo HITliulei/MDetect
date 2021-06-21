@@ -16,6 +16,7 @@ public interface ServicesMapper {
             @Result(property = "serviceId", column = "id"),
             @Result(property = "serviceName", column = "name"),
             @Result(property = "serviceVersion", column = "version"),
+            @Result(property = "branch", column = "branch"),
             @Result(property = "serviceImage", column = "image"),
             @Result(property = "port", column = "port"),
             @Result(property = "basePath", column = "basePath")
@@ -27,14 +28,15 @@ public interface ServicesMapper {
             @Result(property = "serviceId", column = "id"),
             @Result(property = "serviceName", column = "name"),
             @Result(property = "serviceVersion", column = "version"),
+            @Result(property = "branch", column = "branch"),
             @Result(property = "serviceImage", column = "image"),
             @Result(property = "port", column = "port"),
             @Result(property = "basePath", column = "basePath")
     })
     MServiceDao getById(String serviceId);
 
-    @Insert("INSERT INTO services (id, name, version, image, port, basePath)" +
-            " VALUES (#{serviceId}, #{serviceName}, #{serviceVersion}, #{serviceImage}, #{port}, #{basePath})")
+    @Insert("INSERT INTO services (id, name, version, branch, image, port, basePath)" +
+            " VALUES (#{serviceId}, #{serviceName}, #{serviceVersion}, #{branch}, #{serviceImage}, #{port}, #{basePath})")
     void insert(MServiceDao serviceDao);
 
     @Select("SELECT * FROM services WHERE name = #{serviceName}")
@@ -42,6 +44,7 @@ public interface ServicesMapper {
             @Result(property = "serviceId", column = "id"),
             @Result(property = "serviceName", column = "name"),
             @Result(property = "serviceVersion", column = "version"),
+            @Result(property = "branch", column = "branch"),
             @Result(property = "serviceImage", column = "image"),
             @Result(property = "port", column = "port"),
             @Result(property = "basePath", column = "basePath")
@@ -51,7 +54,7 @@ public interface ServicesMapper {
     @Delete("DELETE FROM services WHERE id = #{serviceId}")
     void deleteById(String serviceId);
 
-    @Update("UPDATE services SET name = #{serviceName}, version = #{serviceVersion}, image = #{serviceImage}, port = #{port}, basePath = #{basePath} WHERE id = #{serviceId}")
+    @Update("UPDATE services SET name = #{serviceName}, version = #{serviceVersion}, branch=#{branch}, image = #{serviceImage}, port = #{port}, basePath = #{basePath} WHERE id = #{serviceId}")
     void update(MServiceDao serviceDao);
 
     @Update("UPDATE services SET image = #{imageUrl} WHERE id = #{serviceId}")

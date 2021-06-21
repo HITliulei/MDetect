@@ -1,13 +1,9 @@
 package com.ll.framework.aop;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.ll.common.config.ServiceConfig;
-import com.ll.common.fudan.Response;
 import com.ll.common.trace.Result;
 import com.ll.common.trace.Trace;
 import com.ll.common.utils.MFileUtils;
-import com.ll.common.utils.MJSONUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
@@ -45,6 +41,8 @@ public class MCollectDataAop {
 
     @Pointcut("execution(* *..controller.*.*(..))")
     public void mCollectDataAop() { }
+
+
     @Before("mCollectDataAop()")
     public void mCollectDataBefore(JoinPoint joinPoint){
         HttpServletRequest request =

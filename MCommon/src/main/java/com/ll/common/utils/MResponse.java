@@ -45,4 +45,14 @@ public class MResponse<T> {
     public static MResponse failedResponse(){
         return new MResponse().status("failed");
     }
+
+
+    public static <T> MResponse<T> successResponse(Class<T> tClass){
+        return new MResponse<T>().status("success");
+    }
+
+
+    public static <T> MResponse<T> failedResponse(Class<T> tClass){
+        return new MResponse<T>().status("failed");
+    }
 }

@@ -1,0 +1,18 @@
+server:
+  port: 18080
+
+spring:
+  application:
+    name: MCenterControl
+  datasource:
+    name: service_evolution
+    url: jdbc:mysql://192.168.1.102:3306/smell_detect
+    username: root
+    password: ices504
+    driver-class-name: com.mysql.jdbc.Driver
+
+mybatis:
+  mapper-locations: classpath:mapping/*.xml
+  type-aliases-package: com.ll.centralcontrol.dao
+
+

@@ -23,8 +23,8 @@
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <springboot.version>2.1.6.RELEASE</springboot.version>
-        <springcloud.version>2.1.2.RELEASE</springcloud.version>
+        <springboot.version>2.4.7</springboot.version>
+<!--        <springcloud.version>2.1.2.RELEASE</springcloud.version>-->
     </properties>
 
     <dependencies>
@@ -40,13 +40,12 @@
             </exclusions>
             <version>${springboot.version}</version>
         </dependency>
-
+        <!--    端点监控    -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
             <version>${springboot.version}</version>
         </dependency>
-
 
         <dependency>
             <groupId>org.projectlombok</groupId>
