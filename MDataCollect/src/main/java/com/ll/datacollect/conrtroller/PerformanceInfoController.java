@@ -1,10 +1,14 @@
 package com.ll.datacollect.conrtroller;
 
 import com.ll.common.utils.MResponse;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.ll.datacollect.utils.PerformanceSaveInfo;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.http.HttpHeaders;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * @author Lei
@@ -17,13 +21,34 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/getPerformance")
 @RestController
 public class PerformanceInfoController {
+    private Logger logger = LogManager.getLogger(PerformanceInfoController.class);
+
+
+    private static ExecutorService executorService_performance = Executors.newFixedThreadPool(10);
 
     @GetMapping("getNodeInfo")
     public MResponse getNodeInfo(){
         return MResponse.successResponse();
     }
 
-    @GetMapping("getNodeInfo/{nodeName}")
+    @GetMapping("getNodeInfo/{nodeName}/{name}/{times}")
+    public MResponse getNodeInfo(@PathVariable("nodeName")String nodeName,
+                                 @PathVariable("name")String name,
+                                 @PathVariable("times")String times,
+                                 @RequestHeader HttpHeaders httpHeaders){
+        logger.info("每5秒获取node节点信息");
+        executorService_performance.submit(() -> {
+            PerformanceSaveInfo.saveNodePerformanceData(name, times);
+        });
+        return MResponse.successResponse();
+    }
+
+    @GetMapping("getAllPodInfo")
+    public MResponse getAllPodsNodeInfo(){
+        return MResponse.successResponse();
+    }
+
+    @GetMapping("getAllPodInfo/{nodeName}")
     public MResponse getNodeInfo(@PathVariable("nodeName")String nodeName){
         return MResponse.successResponse();
     }

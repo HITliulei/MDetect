@@ -24,7 +24,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/deploymentInfo")
 public class DeploymentInfoController {
-
     private static Logger logger = LogManager.getLogger(DeploymentInfoController.class);
 
 

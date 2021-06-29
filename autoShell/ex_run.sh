@@ -42,11 +42,11 @@ do
 
   echo  -e "\033[31m 4. deploy all service\033[0m"
   echo  -e "\033[31m 4.1 deploy all microservice\033[0m"
-  curl -X GET -H "name:$EX_NAME" -H "times:$i" http://$EX_IP:$CENTER_PORT/api/v1/deployment/deployment?name=$EX_NAME&times=$i&branch=%EX_BRANCH
+  curl -X GET http://$EX_IP:$CENTER_PORT/api/v1/deployment/deployment?name=$EX_NAME&times=$i&branch=%EX_BRANCH
 #  echo  -e "\033[31m 4.1 deploy exit microservice\033[0m"
 #  curl -X GET -H "name:$EX_NAME" -H "times:$i" http://$EX_IP:32001/deployexit
   echo  -e "\033[31m 4.2 deploy command assembly \033[0m"
-  curl -X GET -H "name:$EX_NAME" -H "times:$i" http://$EX_IP:32001/deploycommand
+  curl -X GET -H "name:$EX_NAME" -H "times:$i" http://$EX_IP:$CENTER_PORT/api/v1/deployment/deploymentCommand
   sleep 3m
 
   # 5. init data

@@ -54,7 +54,7 @@ public class DeploymentController {
      * @param branch 实验使用的分支
      * @return
      */
-    @GetMapping("/deployment")
+    @GetMapping("/deploymentexit")
     public MResponse deployexit(@RequestParam("name") String name, @RequestParam("times") String times, @RequestParam("branch")String branch){
 
 
