@@ -12,6 +12,10 @@ import org.springframework.web.client.RestTemplate;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author Lei
@@ -43,9 +47,18 @@ public class PerformanceSaveInfo {
         }catch (IOException | InterruptedException ioException){
             ioException.printStackTrace();
         }
+
     }
 
-
+    public static void main(String[] args) {
+        String [] s= new String[]{
+                "dog", "lazy", "a", "over", "jumps", "fox", "brown", "quick", "A"
+        };
+        List<String> list = Arrays.asList(s);
+        Collections.reverse(list);
+        s=list.toArray(new String[1]);//没有指定类型的话会报错
+        System.out.println(s[0]);
+    }
 
 
 
