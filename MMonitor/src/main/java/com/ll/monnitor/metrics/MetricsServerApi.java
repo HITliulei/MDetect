@@ -26,7 +26,6 @@ public class MetricsServerApi {
     private String url_get_namespace_pod = "/namespaces/{namespace}/pods/{pod}";
 
 
-
     public MetricsServerApi() {
         this(Configuration.getDefaultApiClient());
     }
