@@ -7,8 +7,8 @@ import com.ll.kubernetes.bean.MPodDockerInfo;
 import com.ll.kubernetes.bean.Node.NodeList;
 import com.ll.common.bean.deployInfoCollect.ResultDeploy;
 import com.ll.kubernetes.utils.K8sutils;
-import io.kubernetes.client.models.V1Pod;
-import io.kubernetes.client.models.V1Service;
+import io.kubernetes.client.openapi.models.V1Pod;
+import io.kubernetes.client.openapi.models.V1Service;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,6 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/v1/controlk8s")
 public class k8scontrol {
-
     private static Logger log = LogManager.getLogger(k8scontrol.class);
 
     @Autowired

@@ -10,14 +10,15 @@ import com.ll.kubernetes.bean.Node.Node;
 import com.ll.kubernetes.bean.Node.NodeList;
 import com.ll.common.bean.deployInfoCollect.PodInfo;
 import com.ll.common.bean.deployInfoCollect.ResultDeploy;
-import io.kubernetes.client.ApiClient;
-import io.kubernetes.client.ApiException;
-import io.kubernetes.client.Configuration;
-import io.kubernetes.client.apis.AppsV1Api;
-import io.kubernetes.client.apis.CoreV1Api;
-import io.kubernetes.client.apis.ExtensionsV1beta1Api;
 import io.kubernetes.client.custom.IntOrString;
 import io.kubernetes.client.models.*;
+import io.kubernetes.client.openapi.ApiClient;
+import io.kubernetes.client.openapi.ApiException;
+import io.kubernetes.client.openapi.Configuration;
+import io.kubernetes.client.openapi.apis.AppsV1Api;
+import io.kubernetes.client.openapi.apis.CoreV1Api;
+import io.kubernetes.client.openapi.apis.ExtensionsV1beta1Api;
+import io.kubernetes.client.openapi.models.*;
 import io.kubernetes.client.util.Config;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -70,7 +71,7 @@ public class K8sutils {
             } else {
                 this.client = Config.fromUrl(k8sClientUrl);
             }
-            this.client.getHttpClient().setReadTimeout(0, TimeUnit.SECONDS);
+//            this.client.getHttpClient().setReadTimeout(0, TimeUnit.SECONDS);
             Configuration.setDefaultApiClient(client);
             this.coreV1Api = new CoreV1Api(this.client);
             this.apiInstance = new AppsV1Api(this.client);
@@ -87,7 +88,7 @@ public class K8sutils {
         try {
             v1NodeList = this.coreV1Api.listNode(null,
                     null, null, null, null, null,
-                    null, null, null);
+                    null, null, null,true);
             List<V1Node> items = v1NodeList.getItems();
             for(V1Node v1Node:items){
                 Map<String, String> labels = v1Node.getMetadata().getLabels();
@@ -109,7 +110,7 @@ public class K8sutils {
         try{
             V1NodeList  v1NodeList = this.coreV1Api.listNode(null,
                     null, null, null, null, null,
-                    null, null, null);
+                    null, null, null, true);
             List<V1Node> items = v1NodeList.getItems();
             for(V1Node v1Node:items){
                 Node node = new Node();
@@ -138,7 +139,7 @@ public class K8sutils {
         try{
             V1NodeList  v1NodeList = this.coreV1Api.listNode(null,
                     null, null, null, null, null,
-                    null, null, null);
+                    null, null, null, true);
             List<V1Node> items = v1NodeList.getItems();
             for(V1Node v1Node:items){
                 Map<String, String> labels = v1Node.getMetadata().getLabels();
@@ -156,7 +157,7 @@ public class K8sutils {
         try{
             V1NodeList  v1NodeList = this.coreV1Api.listNode(null,
                     null, null, null, null, null,
-                    null, null, null);
+                    null, null, null, true);
             List<V1Node> items = v1NodeList.getItems();
             for(V1Node v1Node:items){
                 if (v1Node.getMetadata().getName().equals(node)){
@@ -171,7 +172,7 @@ public class K8sutils {
 
     public List<V1Pod> getALlPod(){
         try {
-            return this.coreV1Api.listNamespacedPod("default", null, null, null, null, null, null, null, null, null).getItems();
+            return this.coreV1Api.listNamespacedPod("default", null, null, null, null, null, null, null, null, null, true).getItems();
         }catch (ApiException a){
             a.printStackTrace();
             return null;
@@ -181,7 +182,7 @@ public class K8sutils {
     public MResponse<List<String>> getAllpodsName(){
         List<String> result = new ArrayList<>();
         try {
-            V1PodList list = this.coreV1Api.listNamespacedPod("default", null, null, null, null, null, null, null, null, null);
+            V1PodList list = this.coreV1Api.listNamespacedPod("default", null, null, null, null, null, null, null, null, null, true);
             for (V1Pod item : list.getItems()) {
                 result.add(item.getMetadata().getName());
             }
@@ -198,7 +199,7 @@ public class K8sutils {
         MDockerInfoBean infoBean = null;
         try {
             infoBean = new MDockerInfoBean();
-            V1PodList list = this.coreV1Api.listNamespacedPod("default", null, null, null, null, null, null, null, null, null);
+            V1PodList list = this.coreV1Api.listNamespacedPod("default", null, null, null, null, null, null, null, null, null, true);
             for (V1Pod item : list.getItems()) {
                 if (item.getStatus() != null &&
                         "Running".equals(item.getStatus().getPhase()) && ipAddr.equals(item.getStatus().getPodIP())) {
@@ -221,7 +222,7 @@ public class K8sutils {
         List<MDockerInfoBean> result = new ArrayList<>();
         try {
 
-            V1PodList list = this.coreV1Api.listNamespacedPod("default", null, null, null, null, null, null, null, null, null);
+            V1PodList list = this.coreV1Api.listNamespacedPod("default", null, null, null, null, null, null, null, null, null, true);
             for (V1Pod item : list.getItems()) {
                 if (item.getStatus() != null && "Running".equals(item.getStatus().getPhase())) {
                     MDockerInfoBean infoBean = new MDockerInfoBean();
@@ -244,7 +245,17 @@ public class K8sutils {
         MDockerInfoBean infoBean = null;
         try {
             infoBean = new MDockerInfoBean();
-            V1PodList list = this.coreV1Api.listNamespacedPod("default", null, null, null, null, null, null, null, null, null);
+            V1PodList list = this.coreV1Api.listNamespacedPod("default",
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    true); // 新特性
             for (V1Pod item : list.getItems()) {
                 if (item.getStatus() != null &&
                         "Running".equals(item.getStatus().getPhase()) && podname.equals(item.getMetadata().getName())) {
@@ -321,7 +332,17 @@ public class K8sutils {
 
     public V1Pod getPOdInfoByName(String podname) {
         try {
-            V1PodList list = this.coreV1Api.listNamespacedPod("default", null, null, null, null, null, null, null, null, null);
+            V1PodList list = this.coreV1Api.listNamespacedPod("default",
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    true);
             for (V1Pod item : list.getItems()) {
                 if (item.getStatus() != null &&
                         "Running".equals(item.getStatus().getPhase()) && podname.equals(item.getMetadata().getName())) {
@@ -337,7 +358,17 @@ public class K8sutils {
 
     public boolean checkIfDockerRunning(String ipAddr) {
         try {
-            V1PodList list = this.coreV1Api.listNamespacedPod("default", null, null, null, null, null, null, null, null, null);
+            V1PodList list = this.coreV1Api.listNamespacedPod("default",
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    true);
             for (V1Pod item : list.getItems()) {
                 if (ipAddr.equals(item.getStatus().getPodIP())) {
                     if (item.getStatus().getPhase().equals("Running")) {
@@ -476,7 +507,7 @@ public class K8sutils {
 
     public V1Service getService(String serviceName){
         try {
-            V1ServiceList v1ServiceList = this.coreV1Api.listNamespacedService("default", null,null,null,null,null,null,null,null,null);
+            V1ServiceList v1ServiceList = this.coreV1Api.listNamespacedService("default", null,null,null,null,null,null,null,null,null, true);
             boolean ifExists = false;
             for (V1Service v1Service1: v1ServiceList.getItems()){
                 if (v1Service1.getMetadata().getName().equals(serviceName)){
@@ -495,7 +526,7 @@ public class K8sutils {
      */
     public boolean checkoutIfAllPodsRunning(){
         try {
-            V1PodList list = this.coreV1Api.listNamespacedPod("default", null, null, null, null, null, null, null, null, null);
+            V1PodList list = this.coreV1Api.listNamespacedPod("default", null, null, null, null, null, null, null, null, null, true);
             List<V1Pod> v1pods = list.getItems();
             System.out.println(v1pods.size());
             for (V1Pod v1Pod : v1pods){
@@ -514,7 +545,7 @@ public class K8sutils {
 
     public void deletenotRun(){
         try {
-            V1PodList list = this.coreV1Api.listNamespacedPod("default", null, null, null, null, null, null, null, null, null);
+            V1PodList list = this.coreV1Api.listNamespacedPod("default", null, null, null, null, null, null, null, null, null, true);
             for (V1Pod v1Pod : list.getItems()){
                 if (!v1Pod.getStatus().getPhase().equals("Running")) {
                     this.coreV1Api.deleteNamespacedPod(
@@ -525,7 +556,8 @@ public class K8sutils {
                             null,
                             null,
                             null,
-                            "Foreground"
+//                            "Foreground",
+                             new V1DeleteOptions()
                     );
                     logger.info(String.format("Pod %s was deleted.",  v1Pod.getMetadata().getName()));
                 }
@@ -656,7 +688,7 @@ public class K8sutils {
         // 顺便更新 mongo的service
         // todo : 更新mongo的数据到 deploymeny文件中：
         try {
-            V1PodList list = this.coreV1Api.listNamespacedPod("default", null, null, null, null, null, null, null, null, null);
+            V1PodList list = this.coreV1Api.listNamespacedPod("default", null, null, null, null, null, null, null, null, null, true);
             for (V1Pod item : list.getItems()) {
                 if (item.getMetadata().getName().contains("mongo")){
                     String mongoName = item.getMetadata().getName();
@@ -679,7 +711,7 @@ public class K8sutils {
 
     public void deleteServiceAndPods(String serviceName){
         try {
-            V1PodList list = this.coreV1Api.listNamespacedPod("default", null, null, null, null, null, null, null, null, null);
+            V1PodList list = this.coreV1Api.listNamespacedPod("default", null, null, null, null, null, null, null, null, null, true);
             for (V1Pod v1Pod : list.getItems()){
                 if (v1Pod.getMetadata().getLabels().get("app").equals(serviceName)){
                     // 删除此pod
@@ -713,7 +745,8 @@ public class K8sutils {
                     null,
                     null,
                     null,
-                    "Foreground"
+//                    "Foreground"
+                    new V1DeleteOptions()
             );
         }catch (ApiException apiException){
             apiException.printStackTrace();
